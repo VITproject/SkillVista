@@ -1,0 +1,35 @@
+{
+  "name": "skillvista",
+  "version": "1.0.0",
+  "description": "Bakend Handled by Swapnil and Dhruval",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "swapnil patel",
+  "license": "ISC",
+  "keywords": [
+    "node.js",
+    "express",
+    "jwt",
+    "login",
+    "registration",
+    "rest api",
+    "authentication",
+    "authorization",
+    "mysql"
+  ],
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongo": "^0.1.0",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.31.1"
+  }
+}
