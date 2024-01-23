@@ -3,6 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const { upload } = require('./middleware/multer.middleware');
+const { uploadOnCloudinary} = require('./utils/cloudinary')
 
 const app = express();
 
@@ -11,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://zeno254t:TZ6YdbG7uqJU23Uz@skillvista.hi5m3md.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.DATABASE_STRING)
   .then(() => console.log('Database Connected Successfully \nhttp://localhost:3000/'))
   .catch(err => console.log(err));
 
@@ -32,8 +34,20 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to SkillVista application." });
 });
 
+
+app.post("/upload", upload.single("file"), async (req, res) => {
+  try {
+    const result = await uploadOnCloudinary(req.file.path);
+    console.log(result)
+    res.json({ success: true, message: "File uploaded successfully"});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
