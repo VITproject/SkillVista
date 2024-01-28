@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .Register{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--brandio-io-venice-blue, #064E89);
+  }
+  
+  .div-form-body{
+    display: flex;
+    padding-left: 550px;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 0 0;
+    align-self: stretch;
+    background: var(--brandio-io-venice-blue, #064E89);
+  }
+  
+  .div-form-holder{
+    display: flex;
+    height: 810px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+  
+  .div-form-content{
+    display: flex;
+    min-height: 810px;
+    padding: 60px 275px;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    background: var(--brandio-io-venice-blue, #064E89);
+  }
+  
+  .div-form-items{
+    height: 361.5px;
+    max-width: 340px;
+    flex: 1 0 0;
+  }
+  .pg-links{
+    display: flex;
+    width: 340px;
+    padding: 1px 229.95px 0.5px 0px;
+    align-items: flex-start;
+    gap: 19.36px;
+  }
+  .pg-a{
+    color: white;
+    margin-bottom: 10px;
+    color: var(--brandio-io-nero, #FFF);
+    /* brandio.io/Lato/Bold 15 */
+    font-family: Lato;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 22.5px; /* 150% */
+    text-decoration: none;
+  }
+  .form{
+    width: 340px;
+  height: 150px;
+  flex-shrink: 0;
+  }
+  .other-link{
+    width: 340px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: 70px;
+  }
+  .other-links-a{
+    color: var(--brandio-io-nero, #FFF);
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 18px; /* 150% */
+  }
+  .other-links-b{
+    color: var(--brandio-io-nero, #FFF);
+    font-family: Lato;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    margin-left: 10px;
+    line-height: 18px; /* 150% */
+  }
+  .div-img-holder{
+    display: flex;
+    width: 550px;
+    height: 810px;
+    min-height: 700px;
+    padding: 148.45px 60px 148.46px 60px;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+    background: var(--brandio-io-nero, #FFF);
+  }
+  
+  .dive-info-holder{
+    height: 513.09px;
+    flex-shrink: 0;
+    align-self: stretch;
+  }
+  
+  .h3{
+    display: inline-flex;
+    max-width: 378px;
+    padding: 0px 104px 0.19px 0px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .p{
+    display: inline-flex;
+    max-width: 378px;
+    padding-right: 68px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .graphic{
+    display: inline-flex;
+    max-width: 378px;
+    align-items: flex-start;
+  }
+  input{
+    display: flex;
+    width: 340px;
+    height: 36.5px;
+    padding: 9.25px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: var(--brandio-io-nero, #FFF);
+  }
+  .div-form-button{
+    display: inline-flex;
+    padding-right: 134.97px;
+    align-items: center;
+    gap: 13.03px;
+    margin-top: 10px;
+  }
+  button{
+    display: flex;
+    padding: 6px 28px;
+    align-items: flex-start;
+    border-radius: 6px;
+    background: var(--brandio-io-nero, #FFF);
+  }
+  .fpass{
+    color: var(--brandio-io-nero, #FFF);
+  
+  /* brandio.io/Lato/Bold 13 */
+  font-family: Lato;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 19.5px; /* 150% */
+  text-transform: none;
+  text-decoration: none;
+  }
