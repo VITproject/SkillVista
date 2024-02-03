@@ -70,29 +70,7 @@
   height: 150px;
   flex-shrink: 0;
   }
-  .other-link{
-    width: 340px;
-  height: 24px;
-  flex-shrink: 0;
-  margin-top: 70px;
-  }
-  .other-links-a{
-    color: var(--brandio-io-nero, #FFF);
-    font-family: Lato;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 18px; /* 150% */
-  }
-  .other-links-b{
-    color: var(--brandio-io-nero, #FFF);
-    font-family: Lato;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    margin-left: 10px;
-    line-height: 18px; /* 150% */
-  }
+  
   .div-img-holder{
     display: flex;
     width: 550px;
@@ -105,30 +83,53 @@
     background: var(--brandio-io-nero, #FFF);
   }
   
-  .dive-info-holder{
+  .div-info-holder{
     height: 513.09px;
     flex-shrink: 0;
     align-self: stretch;
   }
   
-  .h3{
-    display: inline-flex;
-    max-width: 378px;
+  .div-img-holder>h2{
+    margin-bottom: 20px;
+    color: grey;
+    font-size: 30px;
+    text-align: center;
+    top: 0;
+  }
+  .h4{
+    display: inline-block;
     padding: 0px 104px 0.19px 0px;
     justify-content: center;
     align-items: flex-start;
+    color: var(--brandio-io-venice-blue, #064E89);
+    font-family: Lato;
+    font-size: 53px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 27.6px;
   }
   .p{
-    display: inline-flex;
+    display: block;
+    color: var(--brandio-io-venice-blue, #064E89);
+    font-family: Lato;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 20px; /* 111.111% */
     max-width: 378px;
-    padding-right: 68px;
     justify-content: center;
     align-items: flex-start;
+    margin-top: 10px;
   }
   .graphic{
     display: inline-flex;
     max-width: 378px;
     align-items: flex-start;
+  }
+  .graphic>img{
+    width: 377.987px;
+    height: 337.91px;
+    flex-shrink: 0;
   }
   input{
     display: flex;
@@ -154,16 +155,4 @@
     align-items: flex-start;
     border-radius: 6px;
     background: var(--brandio-io-nero, #FFF);
-  }
-  .fpass{
-    color: var(--brandio-io-nero, #FFF);
-  
-  /* brandio.io/Lato/Bold 13 */
-  font-family: Lato;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 19.5px; /* 150% */
-  text-transform: none;
-  text-decoration: none;
   }
