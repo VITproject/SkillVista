@@ -1,6 +1,5 @@
 import React from "react";
 import './Register.css';
-import './index';
 import {Link} from "react-router-dom";
 //import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -12,8 +11,8 @@ const Register=()=>{
               <div className="div-form-content">
                 <div className="div-form-items">
                   <div className="pg-links">
-                  <Link to="/Login" className="pg-a">Login</Link>
-                  <Link to="/" className="pg-a">Register</Link> </div>
+                  <Link to="/" className="pg-a">Login</Link>
+                  <Link to="/Register" className="pg-a">Register</Link> </div>
                   <div className="form">
                   <form>
                     <input type="email" placeholder="Enter your Email"></input> <br/>
@@ -24,21 +23,21 @@ const Register=()=>{
                     </div>
                     </form>
                   </div>
-                  <div className="other-link">
-                    <span className="other-links-a">Or Register with</span><span className="other-links-b">Facebook Google Linkedin</span>
-                  </div>
+                  
                 </div>
               </div>
             </div>
           </div>
     
-          <div class="div-img-holder">
-            <div class="div-info-holder">
-              <div class="h3"></div>
-              <div class="p"></div>
-              <div class="graphic"></div>
-            </div>
+          <div className="div-img-holder"><h2>Register</h2>
+        <div className="div-info-holder">
+          <div className="h4">Vitedu </div>
+          <div className="p">LMS by VIT bhopal</div>
+          <div className="graphic">
+            <img src="3646394.jpg" alt="illustration"/>
           </div>
+        </div>
+      </div>
         </div>
     
       );
