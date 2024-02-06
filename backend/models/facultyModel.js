@@ -29,7 +29,7 @@ const courseSchema = new mongoose.Schema({
 
 const facultySchema = new mongoose.Schema({
   name: String,
-  empId: String,
+  empId: Number,
   password: String,
   courses: [courseSchema],
 });

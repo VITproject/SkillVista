@@ -1,63 +1,104 @@
-// controllers/authController.js
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const Faculty = require('../models/facultyModel'); // Assuming you have a Faculty model
+require("dotenv").config();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const Student = require("../models/studentModel");
+const Faculty = require("../models/facultyModel");
 
-const signup = async (req, res) => {
+const facultySignUp = async (req, res) => {
   const { name, empId, password } = req.body;
-
   try {
-    // Check if faculty with the same empId exists
     const existingFaculty = await Faculty.findOne({ empId });
-
     if (existingFaculty) {
-      return res.status(400).json({ message: 'Faculty with the same empId already exists' });
+      return res.status(400).json({ error: "Faculty with same empId exists." });
     }
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new faculty
     const newFaculty = new Faculty({ name, empId, password: hashedPassword });
     const savedFaculty = await newFaculty.save();
-
-    // Generate JWT token
-    const token = jwt.sign({ empId: savedFaculty.empId }, process.env.JWT_SECRET);
-
-    res.status(201).json({ token });
+    const token = jwt.sign(
+      { empId: savedFaculty.empId },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    res.status(201).json({ savedFaculty, token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-const signin = async (req, res) => {
+const facultySignIn = async (req, res) => {
   const { empId, password } = req.body;
-
   try {
-    // Find faculty by empId
     const faculty = await Faculty.findOne({ empId });
-
     if (!faculty) {
-      return res.status(401).json({ message: 'Invalid empId or password' });
+      return res.status(401).json({ error: "Invalid empId." });
     }
-
-    // Compare the provided password with the hashed password
-    const passwordMatch = await bcrypt.compare(password, faculty.password);
-
+    const passwordMatch = bcrypt.compare(password, faculty.password);
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid empId or password' });
+      return res.status(401).json({ error: "Invalid password." });
     }
-
-    // Generate JWT token
-    const token = jwt.sign({ empId: faculty.empId }, process.env.JWT_SECRET);
-
-    res.json({ token });
+    const token = jwt.sign({ empId: faculty.empId }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.json({ message: "Sign in successful", token });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const studentSignUp = async (req, res) => {
+  const { name, email, password, courses } = req.body;
+  try {
+    const existingStudent = await Student.findOne({ email });
+    if (existingStudent) {
+      return res
+        .status(400)
+        .json({ error: "Student with the same email already exists." });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newStudent = new Student({
+      name,
+      email,
+      password: hashedPassword,
+      courses,
+    });
+    const savedStudent = await newStudent.save();
+    const token = jwt.sign(
+      { email: savedStudent.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    res.status(201).json({ savedStudent, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const studentSignIn = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const student = await Student.findOne({ email });
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+    const isPasswordValid = bcrypt.compare(password, student.password);
+    if (!isPasswordValid) {
+      res.status(401).json({ error: "Invalid password" });
+      return;
+    }
+    const token = jwt.sign({ email: student.email }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.json({ message: "Sign in successful", token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
 module.exports = {
-  signup,
-  signin,
+  facultySignUp,
+  facultySignIn,
+  studentSignUp,
+  studentSignIn,
 };
