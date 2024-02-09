@@ -5,14 +5,19 @@ const Student = require("../models/studentModel");
 const Faculty = require("../models/facultyModel");
 
 const facultySignUp = async (req, res) => {
-  const { name, empId, password } = req.body;
+  const { name, email, empId, password } = req.body;
   try {
     const existingFaculty = await Faculty.findOne({ empId });
     if (existingFaculty) {
       return res.status(400).json({ error: "Faculty with same empId exists." });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newFaculty = new Faculty({ name, empId, password: hashedPassword });
+    const newFaculty = new Faculty({
+      name,
+      email,
+      empId,
+      password: hashedPassword,
+    });
     const savedFaculty = await newFaculty.save();
     const token = jwt.sign(
       { empId: savedFaculty.empId },
