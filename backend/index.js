@@ -1,39 +1,29 @@
-require('dotenv').config();  // Load environment variables from .env file
+require("dotenv").config(); // Load environment variables from .env file
+
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const session = require("express-session");
+const connectToDatabase = require("./config/databaseConfig");
+const authMiddleware = require("./middleware/authMiddleware");
+const facultyRoutes = require("./routes/facultyRoutes");
+const studentRoutes = require("./routes/studentRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-// MongoDB Connection
-mongoose.connect('mongodb+srv://zeno254t:TZ6YdbG7uqJU23Uz@skillvista.hi5m3md.mongodb.net/?retryWrites=true&w=majority')
-  .then(() => console.log('Database Connected Successfully \nhttp://localhost:3000/'))
-  .catch(err => console.log(err));
+connectToDatabase();
 
-// Express Session
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "default-secret-key",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+app.use("/auth", authRoutes);
 
-// Routes
-require("./routes/auth.routes")(app);
-require("./routes/user.routes")(app);
+app.use("/faculty", authMiddleware, facultyRoutes);
+app.use("/student", authMiddleware, studentRoutes);
 
-app.get("/", (req, res) => {
+app.get("/", authMiddleware, (req, res) => {
   res.json({ message: "Welcome to SkillVista application." });
 });
 
-// Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
