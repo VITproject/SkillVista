@@ -5,7 +5,7 @@ const Student = require("../models/studentModel");
 const getAllStudents = async (req, res) => {
   try {
     const students = await Student.find().distinct("name");
-    const studentIds = students.map(student => student._id);
+    const studentIds = students.map((student) => student._id);
     console.log(studentIds);
     res.json(students);
   } catch (error) {

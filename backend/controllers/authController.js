@@ -11,6 +11,16 @@ const facultySignUp = async (req, res) => {
     if (existingFaculty) {
       return res.status(400).json({ error: "Faculty with same empId exists." });
     }
+    if (empId.length !== 6) {
+      return res.status(400).json({ error: "empId must be 6 digits long." });
+    }
+    if (password.length !== 8) {
+      return res.status(400).json({ error: "Password must be 8 digits long." });
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      return res.status(400).json({ error: "Invalid email format." });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newFaculty = new Faculty({
       name,
@@ -39,7 +49,7 @@ const facultySignIn = async (req, res) => {
     if (!faculty) {
       return res.status(401).json({ error: "Invalid empId." });
     }
-    const passwordMatch = bcrypt.compare(password, faculty.password);
+    const passwordMatch = await bcrypt.compare(password, faculty.password);
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid password." });
     }
@@ -60,6 +70,13 @@ const studentSignUp = async (req, res) => {
       return res
         .status(400)
         .json({ error: "Student with the same email already exists." });
+    }
+    if (password.length !== 8) {
+      return res.status(400).json({ error: "Password must be 8 digits long." });
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      return res.status(400).json({ error: "Invalid email format." });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newStudent = new Student({
@@ -87,7 +104,7 @@ const studentSignIn = async (req, res) => {
     if (!student) {
       return res.status(404).json({ error: "Student not found" });
     }
-    const isPasswordValid = bcrypt.compare(password, student.password);
+    const isPasswordValid = await bcrypt.compare(password, student.password);
     if (!isPasswordValid) {
       res.status(401).json({ error: "Invalid password" });
       return;
