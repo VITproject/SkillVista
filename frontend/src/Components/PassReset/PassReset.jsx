@@ -2,6 +2,7 @@ import React from "react";
 import "./PassReset.css";
 //import { Link } from "react-router-dom";
 
+import illus from './ForgotPassword.svg'
 const PassReset = () => {
   return (
     <div className="passReset">
@@ -32,7 +33,7 @@ const PassReset = () => {
           <div className="h3">Vitedu </div>
           <div className="p">LMS by VIT bhopal</div>
           <div className="graphic">
-            <img src="3646394.jpg" alt="illustration"/>
+            <img src={illus} alt="illustration"/>
           </div>
         </div>
       </div>
