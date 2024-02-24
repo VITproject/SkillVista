@@ -1,8 +1,9 @@
 // controllers/facultyController.js
 
 const Faculty = require("../models/facultyModel");
+const { upload } = require("../middleware/multer.middleware");
+const { uploadOnCloudinary } = require("../config/cloudinary");
 
-// Get all faculties
 const getAllFaculties = async (req, res) => {
   try {
     const faculties = await Faculty.find();
@@ -23,7 +24,24 @@ const getFacultyById = async (req, res) => {
   }
 };
 
+
+const handleFileUpload = async (req, res) => {
+  try {
+    if (req.file) {
+      const result = await uploadOnCloudinary(req.file.path);
+      console.log(result);
+      res.json({ success: true, message: "File uploaded successfully" });
+    } else {
+      throw new Error("No file provided in the request");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   getAllFaculties,
   getFacultyById,
+  handleFileUpload,
 };

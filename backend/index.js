@@ -1,5 +1,6 @@
 require("dotenv").config(); // Load environment variables from .env file
 
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const connectToDatabase = require("./config/databaseConfig");
@@ -10,6 +11,7 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 connectToDatabase();
