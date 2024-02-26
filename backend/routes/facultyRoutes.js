@@ -2,7 +2,6 @@
 const express = require('express');
 
 const facultyController = require('../controllers/facultyController');
-const authMiddleware = require('../middleware/authMiddleware'); 
 
 const router = express.Router();
 
@@ -12,20 +11,20 @@ router.get('/:id', facultyController.getFacultyById);
 
 //  Some Api Regarding Faculty Operation
 
-router.post('/createCourse', authMiddleware, facultyController.createCourse);
+router.post('/createCourse', facultyController.createCourse);
 
-router.post('/:course_id/addSubject', authMiddleware, facultyController.addSubject);
+router.post('/createSubject', facultyController.createSubject);
 
-router.post('/:subject_id/addLecture', authMiddleware, facultyController.addLecture);
+router.post('/:subject_id/addLecture', facultyController.addLecture);
 
-router.post('/:lecture_id/addQuiz', authMiddleware, facultyController.addQuiz);
+router.post('/:lecture_id/addQuiz', facultyController.addQuiz);
 
-router.delete('/:course_id/removeStudent/:student_id', authMiddleware, facultyController.removeStudent);
+router.delete('/:course_id/removeStudent/:student_id', facultyController.removeStudent);
 
-router.delete('/:course_id/removeSubject/:subject_id', authMiddleware, facultyController.removeSubject);
+router.delete('/:course_id/removeSubject/:subject_id', facultyController.removeSubject);
 
-router.delete('/:course_id/deleteCourse', authMiddleware, facultyController.deleteCourse);
+router.delete('/:course_id/deleteCourse', facultyController.deleteCourse);
 
-router.get('/getCoursesInfo', authMiddleware, facultyController.getCoursesInfo);
+router.get('/getCoursesInfo', facultyController.getCoursesInfo);
 
 module.exports = router;

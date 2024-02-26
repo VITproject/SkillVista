@@ -17,7 +17,7 @@ const getAllStudents = async (req, res) => {
 // Get student by ID
 
 const getStudentById = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
     const student = await Student.findById(id);
     res.json(student);
@@ -29,7 +29,7 @@ const getStudentById = async (req, res) => {
 // Register student for a course
 
 const registerForCourse = async (req, res) => {
-  const { student_id, course_id } = req.params;
+  const { student_id, course_id } = req.body;
   try {
     const student = await Student.findById(student_id);
     const course = await Courses.findById(course_id);
@@ -59,7 +59,7 @@ const registerForCourse = async (req, res) => {
 // Register student for a subject
 
 const registerForSubject = async (req, res) => {
-  const { student_id, course_id, subject_id } = req.params;
+  const { student_id, course_id, subject_id } = req.body;
   try {
     const student = await Student.findById(student_id);
     const course = await Courses.findById(course_id);
@@ -104,7 +104,7 @@ const registerForSubject = async (req, res) => {
 // Access lecture materials for a subject
 
 const accessSubjectMaterials = async (req, res) => {
-  const { student_id, subject_id } = req.params;
+  const { student_id, subject_id } = req.body;
 
   try {
     const student = await Student.findById(student_id);

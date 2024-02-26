@@ -1,8 +1,10 @@
 // controllers/facultyController.js
+require("dotenv").config();
 
 const Faculty = require("../models/facultyModel");
 const Courses = require('../models/courseModel');
 const Students = require('../models/studentModel');
+const jwt = require('jsonwebtoken');
 
 // Get all faculties
 const getAllFaculties = async (req, res) => {
@@ -16,7 +18,7 @@ const getAllFaculties = async (req, res) => {
 
 // Get faculty by ID
 const getFacultyById = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
     const faculty = await Faculty.findById(id);
     res.json(faculty);
@@ -29,12 +31,32 @@ const getFacultyById = async (req, res) => {
 
 const createCourse = async (req, res) => {
   const { course_name } = req.body;
-  const faculty_id = req.emp.id;
+  const getIdFromToken = (token) => {
+    try {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      return decodedToken._id;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
 
   try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+    const token = authHeader.split(' ')[1];
+    const faculty_id = await getIdFromToken(token);
+    const faculty = await Faculty.findById(faculty_id);
+
+    if (!faculty) {
+      return res.status(404).json({ error: 'Faculty not found' });
+    }
+
     const newCourse = new Courses({
       course_name,
       faculty_id,
+      createdBy: faculty.name, // Include the faculty's name as createdBy
       subjects: [],
     });
 
@@ -48,18 +70,20 @@ const createCourse = async (req, res) => {
 // Create Subjects under faculty -> course
 
 const createSubject = async (req, res) => {
-  const { course_id } = req.params;
+  const { course_name } = req.body;
   const { subject_name } = req.body;
+  const { empIdInput } = req.body;
 
   try {
-    const course = await Courses.findById(course_id);
-
+    const course = await Courses.findOne({ course_name });
+    const empId = await Faculty.findOne({ empIdInput });
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
     }
 
     const newSubject = {
       subject_name,
+      faculty_id:empId._id,
       lectures: [],
     };
 
@@ -76,7 +100,7 @@ const createSubject = async (req, res) => {
 // Add lectures under faculty -> coursec -> Subject
 
 const addLecture = async (req, res) => {
-  const { course_id, subject_id } = req.params;
+  const { course_id, subject_id } = req.body;
   const { title, video_url, quiz } = req.body;
 
   try {
@@ -110,7 +134,7 @@ const addLecture = async (req, res) => {
 // Add Quiz under faculty -> coursec -> Subject ->lecture
 
 const addQuiz = async (req, res) => {
-  const { course_id, subject_id, lecture_id } = req.params;
+  const { course_id, subject_id, lecture_id } = req.body;
   const { title, questions } = req.body;
 
   try {
@@ -152,7 +176,7 @@ const addQuiz = async (req, res) => {
 // fetching the course
 
 const removeStudent = async (req, res) => {
-  const { course_id, student_id } = req.params;
+  const { course_id, student_id } = req.body;
 
   try {
     const course = await Courses.findById(course_id);
@@ -176,7 +200,7 @@ const removeStudent = async (req, res) => {
 // Removing the subject from course
 
 const removeSubject = async (req, res) => {
-  const { course_id, subject_id } = req.params;
+  const { course_id, subject_id } = req.body;
 
   try {
     const course = await Courses.findById(course_id);
@@ -199,7 +223,7 @@ const removeSubject = async (req, res) => {
 // Deleting the course 
 
 const deleteCourse = async (req, res) => {
-  const { course_id } = req.params;
+  const { course_id } = req.body;
 
   try {
     // Remove the course from the database
@@ -215,8 +239,7 @@ const deleteCourse = async (req, res) => {
 // Getting some info about multiple things like
 
 const getCoursesInfo = async (req, res) => {
-  const faculty_id = req.emp.id;
-
+  const faculty_id = req.empId;
   try {
     // Retrieve courses with information
 

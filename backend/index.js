@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const connectToDatabase = require("./config/databaseConfig");
 const authMiddleware = require("./middleware/authMiddleware");
+const facultyMiddleware = require("./middleware/facultyMiddleware");
 const facultyRoutes = require("./routes/facultyRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -16,7 +17,7 @@ connectToDatabase();
 
 app.use("/auth", authRoutes);
 
-app.use("/faculty", authMiddleware, facultyRoutes);
+app.use("/faculty", authMiddleware, facultyMiddleware, facultyRoutes);
 app.use("/student", authMiddleware, studentRoutes);
 
 app.get("/", authMiddleware, (req, res) => {
