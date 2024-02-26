@@ -240,7 +240,6 @@ const deleteCourse = async (req, res) => {
 
 const getCoursesInfo = async (req, res) => {
   const faculty_id = req.empId;
-
   try {
     // Retrieve courses with information
 

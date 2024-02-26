@@ -43,6 +43,7 @@ const facultySignIn = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid password." });
     }
+
     const token = jwt.sign({ empId: faculty.empId, _id: faculty._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
