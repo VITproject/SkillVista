@@ -11,7 +11,7 @@ const facultySignUp = async (req, res) => {
     if (existingFaculty) {
       return res.status(400).json({ error: "Faculty with same empId exists." });
     }
-    if (empId.length !== 6) {
+    if (empId.length < 6) {
       return res.status(400).json({ error: "empId must be 6 digits long." });
     }
     if (password.length !== 8) {
@@ -29,14 +29,7 @@ const facultySignUp = async (req, res) => {
       password: hashedPassword,
     });
     const savedFaculty = await newFaculty.save();
-    const token = jwt.sign(
-      { empId: savedFaculty.empId },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
-    res.status(201).json({ savedFaculty, token });
+    res.status(201).json({ savedFaculty });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -53,10 +46,11 @@ const facultySignIn = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid password." });
     }
-    const token = jwt.sign({ empId: faculty.empId }, process.env.JWT_SECRET, {
+
+    const token = jwt.sign({ empId: faculty.empId, _id: faculty._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Sign in successful", token });
+    res.json({ message: "Sign in successful", token, empId: faculty.empId });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -86,12 +80,7 @@ const studentSignUp = async (req, res) => {
       courses,
     });
     const savedStudent = await newStudent.save();
-    const token = jwt.sign(
-      { email: savedStudent.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-    res.status(201).json({ savedStudent, token });
+    res.status(201).json({ savedStudent });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -112,7 +101,7 @@ const studentSignIn = async (req, res) => {
     const token = jwt.sign({ email: student.email }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Sign in successful", token });
+    res.json({ message: "Sign in successful", token, studentMail: student.email });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

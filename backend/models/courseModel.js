@@ -34,15 +34,31 @@ const lectureSchema = new mongoose.Schema({
 });
 
 const subjectSchema = new mongoose.Schema({
-  subject_id: mongoose.Schema.Types.ObjectId,
-  subject_name: String,
-  lectures: [lectureSchema],
+  faculty_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Faculty'
+  },
+  subject_name: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
+  lectures: [lectureSchema]
 });
 
 const courseSchema = new mongoose.Schema({
-  course_name: String,
-  faculty_id: mongoose.Schema.Types.ObjectId,
-  subjects: [subjectSchema],
+  course_name: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
+  createdBy: String,
+  faculty_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Faculty'
+  }, subjects: [subjectSchema]
 });
 
 const Courses = mongoose.model("Courses", courseSchema);
