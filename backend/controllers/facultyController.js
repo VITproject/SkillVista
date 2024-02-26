@@ -5,8 +5,6 @@ const { uploadOnCloudinary } = require("../config/cloudinary");
 const Faculty = require("../models/facultyModel");
 const Courses = require('../models/courseModel');
 const jwt = require('jsonwebtoken');
-
-// Get all faculties
 const getAllFaculties = async (req, res) => {
   try {
     const faculties = await Faculty.find();
@@ -270,7 +268,6 @@ const getCoursesInfo = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 module.exports = {
   handleFileUpload,

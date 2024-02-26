@@ -23,9 +23,9 @@
     background: var(--brandio-io-venice-blue, #064E89);
   }
   
-  .div-form-holder{
+  .div-form-holder-r{
     display: flex;
-    height: 810px;
+    height: 710px;
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
@@ -71,10 +71,10 @@
   flex-shrink: 0;
   }
   
-  .div-img-holder{
+  .div-img-holder-r{
     display: flex;
     width: 550px;
-    height: 810px;
+    height: 710px;
     min-height: 700px;
     padding: 148.45px 60px 148.46px 60px;
     flex-direction: column;
@@ -89,16 +89,16 @@
     align-self: stretch;
   }
   
-  .div-img-holder>h2{
-    margin-bottom: 20px;
+  .div-img-holder-r>h2{
+    margin-top: 0%;
+    margin:10px 140px;
     color: grey;
     font-size: 30px;
     text-align: center;
     top: 0;
   }
-  .h4{
-    display: inline-block;
-    padding: 0px 104px 0.19px 0px;
+  .img-h{
+    margin-left: 0%;
     justify-content: center;
     align-items: flex-start;
     color: var(--brandio-io-venice-blue, #064E89);
@@ -108,18 +108,12 @@
     font-weight: 900;
     line-height: 27.6px;
   }
-  .p{
+  .pa{
     display: block;
     color: var(--brandio-io-venice-blue, #064E89);
     font-family: Lato;
     font-size: 18px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 20px; /* 111.111% */
-    max-width: 378px;
-    justify-content: center;
-    align-items: flex-start;
-    margin-top: 10px;
+    margin: 10px;
   }
   .graphic{
     display: inline-flex;

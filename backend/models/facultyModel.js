@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const facultySchema = new mongoose.Schema({
   name: String,
@@ -22,10 +22,10 @@ const facultySchema = new mongoose.Schema({
   subjects: [
     {
       subject_id: mongoose.Schema.Types.ObjectId,
-    }
-  ]
+    },
+  ],
 });
 
-const Faculty = mongoose.model('Faculty', facultySchema);
+const Faculty = mongoose.model("Faculty", facultySchema);
 
 module.exports = Faculty;
