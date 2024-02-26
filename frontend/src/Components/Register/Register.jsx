@@ -7,6 +7,7 @@ import illus from './register.svg';
 const Register = () => {
   const [formData, setFormData] = useState({
     email: '',
+    collegeId:'',
     name: '',
     password: '',
     confirmPassword: '',
@@ -48,7 +49,7 @@ const Register = () => {
      await axios.post('http://localhost:4000/auth/s-signup', formData);
 
       // Clear the form after successful registration
-      setFormData({ email: '', name: '', password: '', confirmPassword: '' });
+      setFormData({ email: '', collegeId:'', name: '', password: '', confirmPassword: '' });
       setMessage("Registration Successfull");
     } 
     catch (error) {
@@ -72,9 +73,12 @@ const Register = () => {
 
               <div className="form">
                 <form onSubmit={handleSubmit}>
-                  <input type="text" name="email" value={formData.email} placeholder="Enter your ID" onChange={handleChange} />
+                  <input type="text" name="email" value={formData.email} placeholder="Enter your Email" onChange={handleChange} />
                   {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                   <br />
+
+                  <input type="text" name="collegeId" value={formData.collegeId} placeholder="Enter your College ID" onChange={handleChange} />
+                  <br/>
 
                   <input type="text" name="name" value={formData.name} placeholder="Enter your full name" onChange={handleChange} />
                   <br />

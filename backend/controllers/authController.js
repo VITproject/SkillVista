@@ -57,7 +57,7 @@ const facultySignIn = async (req, res) => {
 };
 
 const studentSignUp = async (req, res) => {
-  const { name, email, password, courses } = req.body;
+  const { name, email, password, collegeId,courses } = req.body;
   try {
     const existingStudent = await Student.findOne({ email });
     if (existingStudent) {
@@ -76,6 +76,7 @@ const studentSignUp = async (req, res) => {
     const newStudent = new Student({
       name,
       email,
+      collegeId,
       password: hashedPassword,
       courses,
     });
@@ -87,9 +88,9 @@ const studentSignUp = async (req, res) => {
 };
 
 const studentSignIn = async (req, res) => {
-  const { email, password } = req.body;
+  const { collegeId, password } = req.body;
   try {
-    const student = await Student.findOne({ email });
+    const student = await Student.findOne({ collegeId });
     if (!student) {
       return res.status(404).json({ error: "Student not found" });
     }
@@ -98,10 +99,10 @@ const studentSignIn = async (req, res) => {
       res.status(401).json({ error: "Invalid password" });
       return;
     }
-    const token = jwt.sign({ email: student.email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ collegeId: student.collegeId }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Sign in successful", token, studentMail: student.email });
+    res.json({ message: "Sign in successful", token, collegeId: student.collegeId });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
