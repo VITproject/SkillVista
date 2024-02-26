@@ -11,6 +11,16 @@ const facultySignUp = async (req, res) => {
     if (existingFaculty) {
       return res.status(400).json({ error: "Faculty with same empId exists." });
     }
+    if (empId.length < 6) {
+      return res.status(400).json({ error: "empId must be 6 digits long." });
+    }
+    if (password.length !== 8) {
+      return res.status(400).json({ error: "Password must be 8 digits long." });
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      return res.status(400).json({ error: "Invalid email format." });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newFaculty = new Faculty({
       name,
@@ -19,14 +29,7 @@ const facultySignUp = async (req, res) => {
       password: hashedPassword,
     });
     const savedFaculty = await newFaculty.save();
-    const token = jwt.sign(
-      { empId: savedFaculty.empId },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
-    res.status(201).json({ savedFaculty, token });
+    res.status(201).json({ savedFaculty });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -39,7 +42,7 @@ const facultySignIn = async (req, res) => {
     if (!faculty) {
       return res.status(401).json({ error: "Invalid empId." });
     }
-    const passwordMatch = bcrypt.compare(password, faculty.password);
+    const passwordMatch = await bcrypt.compare(password, faculty.password);
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid password." });
     }
@@ -47,7 +50,7 @@ const facultySignIn = async (req, res) => {
     const token = jwt.sign({ empId: faculty.empId, _id: faculty._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Sign in successful", token });
+    res.json({ message: "Sign in successful", token, empId: faculty.empId });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -62,6 +65,13 @@ const studentSignUp = async (req, res) => {
         .status(400)
         .json({ error: "Student with the same email already exists." });
     }
+    if (password.length !== 8) {
+      return res.status(400).json({ error: "Password must be 8 digits long." });
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      return res.status(400).json({ error: "Invalid email format." });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newStudent = new Student({
       name,
@@ -70,12 +80,7 @@ const studentSignUp = async (req, res) => {
       courses,
     });
     const savedStudent = await newStudent.save();
-    const token = jwt.sign(
-      { email: savedStudent.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-    res.status(201).json({ savedStudent, token });
+    res.status(201).json({ savedStudent });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -88,7 +93,7 @@ const studentSignIn = async (req, res) => {
     if (!student) {
       return res.status(404).json({ error: "Student not found" });
     }
-    const isPasswordValid = bcrypt.compare(password, student.password);
+    const isPasswordValid = await bcrypt.compare(password, student.password);
     if (!isPasswordValid) {
       res.status(401).json({ error: "Invalid password" });
       return;
@@ -96,7 +101,7 @@ const studentSignIn = async (req, res) => {
     const token = jwt.sign({ email: student.email }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Sign in successful", token });
+    res.json({ message: "Sign in successful", token, studentMail: student.email });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

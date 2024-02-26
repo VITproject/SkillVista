@@ -7,7 +7,9 @@ const Courses = require('../models/courseModel');
 
 const getAllStudents = async (req, res) => {
   try {
-    const students = await Student.find();
+    const students = await Student.find().distinct("name");
+    const studentIds = students.map((student) => student._id);
+    console.log(studentIds);
     res.json(students);
   } catch (error) {
     res.status(500).json({ error: error.message });

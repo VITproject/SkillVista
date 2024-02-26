@@ -1,9 +1,9 @@
 // controllers/facultyController.js
 require("dotenv").config();
 
+const { uploadOnCloudinary } = require("../config/cloudinary");
 const Faculty = require("../models/facultyModel");
 const Courses = require('../models/courseModel');
-const Students = require('../models/studentModel');
 const jwt = require('jsonwebtoken');
 
 // Get all faculties
@@ -18,12 +18,27 @@ const getAllFaculties = async (req, res) => {
 
 // Get faculty by ID
 const getFacultyById = async (req, res) => {
-  const { id } = req.body;
+  const { empId } = req.body;
   try {
-    const faculty = await Faculty.findById(id);
+    const faculty = await Faculty.findOne({ empId });
     res.json(faculty);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+const handleFileUpload = async (req, res) => {
+  try {
+    if (req.file) {
+      const result = await uploadOnCloudinary(req.file.path);
+      console.log(result);
+      res.json({ success: true, message: "File uploaded successfully" });
+    } else {
+      throw new Error("No file provided in the request");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -72,18 +87,21 @@ const createCourse = async (req, res) => {
 const createSubject = async (req, res) => {
   const { course_name } = req.body;
   const { subject_name } = req.body;
-  const { empIdInput } = req.body;
+  const { empId } = req.body;
 
   try {
     const course = await Courses.findOne({ course_name });
-    const empId = await Faculty.findOne({ empIdInput });
+    const empIdX = await Faculty.findOne({ empId });
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
+    }
+    if (!empIdX) {
+      return res.status(404).json({ error: 'Faculty not found' });
     }
 
     const newSubject = {
       subject_name,
-      faculty_id:empId._id,
+      faculty_id: empIdX._id,
       lectures: [],
     };
 
@@ -223,12 +241,11 @@ const removeSubject = async (req, res) => {
 // Deleting the course 
 
 const deleteCourse = async (req, res) => {
-  const { course_id } = req.body;
+  const { course_name } = req.body;
 
   try {
     // Remove the course from the database
-    await Courses.findByIdAndDelete(course_id);
-
+    await Courses.findOneAndDelete(course_name);
     res.json({ message: 'Course deleted successfully' });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -256,6 +273,7 @@ const getCoursesInfo = async (req, res) => {
 
 
 module.exports = {
+  handleFileUpload,
   getAllFaculties,
   getFacultyById,
   createCourse,

@@ -1,19 +1,21 @@
 
-const express = require('express');
-
-const facultyController = require('../controllers/facultyController');
+const express = require("express");
+const facultyController = require("../controllers/facultyController");
+const multer = require("multer");
+const uploadDest = multer({ dest: "uploads/" });
 
 const router = express.Router();
 
 // Fetching Faculty 
-router.get('/all', facultyController.getAllFaculties);
-router.get('/:id', facultyController.getFacultyById);
+router.get('/all', facultyController.getAllFaculties);//
+router.get('/facultyInfo', facultyController.getFacultyById);//
+router.post("/upload", uploadDest.single("file"), facultyController.handleFileUpload);//
 
 //  Some Api Regarding Faculty Operation
 
-router.post('/createCourse', facultyController.createCourse);
+router.post('/createCourse', facultyController.createCourse);//
 
-router.post('/createSubject', facultyController.createSubject);
+router.post('/createSubject', facultyController.createSubject);//
 
 router.post('/:subject_id/addLecture', facultyController.addLecture);
 
@@ -23,7 +25,7 @@ router.delete('/:course_id/removeStudent/:student_id', facultyController.removeS
 
 router.delete('/:course_id/removeSubject/:subject_id', facultyController.removeSubject);
 
-router.delete('/:course_id/deleteCourse', facultyController.deleteCourse);
+router.delete('/deleteCourse', facultyController.deleteCourse);//
 
 router.get('/getCoursesInfo', facultyController.getCoursesInfo);
 
