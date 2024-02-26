@@ -4,7 +4,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Register/Register'; 
 import PassReset from './Components/PassReset/PassReset';
 import Dashboard from './Components/S-Dashboard/SDashboard';
-
+import PopUp from './Components/PopUp/Pop';
 
 // function App() {
 //   return (
@@ -36,6 +36,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/passreset" element={<PassReset />} />
+        <Route path='/popup' element={<PopUp/>}/>
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>

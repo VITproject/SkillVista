@@ -12,7 +12,7 @@ const Login = () => {
   //form validation error
   const [errors, setErrors] = useState({});
   //on-submit error/message
-  //const [isError, setIsError] = useState("");
+  const [message, setMessage] = useState("");
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -25,7 +25,7 @@ const Login = () => {
       if (formData.email.length < 5) {
         validationErrors.email = "ID is unvalid";
       }
-      if (formData.password.length < 1) {
+      if (formData.password.length < 2) {
         validationErrors.password = "Password required";
       }
 
@@ -34,20 +34,29 @@ const Login = () => {
         return;
       }
 
+      const handleResponse = (response) => {
+        console.log(response.data);
+        setMessage(response.data.message);
+        
+      };
       // Make a POST request to your backend endpoint
-      axios.post("http://localhost:4000/auth/s-signin", formData);
-      //console.log(res);
-      // Clear the form after successful registration
+      axios
+        .post("http://localhost:4000/auth/s-signin", formData)
+        .then(handleResponse)
+        .catch((error) => {
+          console.log(error);
+        });
       setFormData({ email: "", password: "" });
     } catch (error) {
       console.error(error);
-      //setIsError(error.message+": User Already Exist Refresh And Try Again");
     }
   };
+
   return (
     <div className="Login">
       <div className="div-form-body">
         <div className="div-form-holder">
+        
           <div className="div-form-content">
             <div className="div-form-items">
               <div className="pg-links">
@@ -87,9 +96,9 @@ const Login = () => {
 
                   <div className="div-form-button">
                     <button>Login
-                      {/* <Link to="/Dashboard" style={{ textDecoration: "none" }}>
+                      <Link to="/PopUp" style={{ textDecoration: "none" }}>
                         Login
-                      </Link> */}
+                      </Link>
                     </button>
                     <Link to="/PassReset" className="fpass">
                       Forget password?
@@ -98,6 +107,7 @@ const Login = () => {
                 </form>
               </div>
             </div>
+            <h1>{message}</h1>
           </div>
         </div>
       </div>
