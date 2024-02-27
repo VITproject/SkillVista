@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import illus from "./login.svg";
 import axios from "axios";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    email: "",
+    collegeId: "",
     password: "",
   });
-  //form validation error
-  const [errors, setErrors] = useState({});
-  //on-submit error/message
-  //const [isError, setIsError] = useState("");
+  const navigate = useNavigate(); 
+  const [errors, setErrors] = useState({});//form validation error
+  const [message, setMessage] = useState("");   //on-submit error/message
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -22,10 +22,10 @@ const Login = () => {
     try {
       // Perform form validation
       const validationErrors = {};
-      if (formData.email.length < 5) {
-        validationErrors.email = "ID is unvalid";
+      if (formData.collegeId.length < 5) {
+        validationErrors.collegeId = "ID is unvalid";
       }
-      if (formData.password.length < 1) {
+      if (formData.password.length < 2) {
         validationErrors.password = "Password required";
       }
 
@@ -34,20 +34,33 @@ const Login = () => {
         return;
       }
 
+      const handleResponse = (response) => {
+        console.log(response.data.collegeId);
+        const id=response.data.collegeId;
+        if(id!==""){
+          navigate('/popup'); // Adjust the path according to your routes
+          setMessage(response.data.message);
+
+        } 
+      };
       // Make a POST request to your backend endpoint
-      axios.post("http://localhost:4000/auth/s-signin", formData);
-      //console.log(res);
-      // Clear the form after successful registration
-      setFormData({ email: "", password: "" });
+      axios
+        .post("http://localhost:4000/auth/s-signin", formData)
+        .then(handleResponse)
+        .catch((error) => {
+          console.log(error);
+        });
+      setFormData({ collegeId: "", password: "" });
     } catch (error) {
       console.error(error);
-      //setIsError(error.message+": User Already Exist Refresh And Try Again");
     }
   };
+
   return (
     <div className="Login">
       <div className="div-form-body">
         <div className="div-form-holder">
+        
           <div className="div-form-content">
             <div className="div-form-items">
               <div className="pg-links">
@@ -63,13 +76,13 @@ const Login = () => {
                 <form onClick={handleClick}>
                   <input
                     type="text"
-                    name="email"
-                    value={formData.email}
+                    name="collegeId"
+                    value={formData.collegeId}
                     placeholder="Enter your ID"
                     onChange={handleChange}
                   />
-                  {errors.email && (
-                    <p style={{ color: "red" }}>{errors.email}</p>
+                  {errors.collegeId && (
+                    <p style={{ color: "red" }}>{errors.collegeId}</p>
                   )}
                   <br />
 
@@ -80,17 +93,13 @@ const Login = () => {
                     placeholder="Enter your password"
                     onChange={handleChange}
                   />
-                  {errors.password && (
+                  {/* {errors.password && (
                     <p style={{ color: "red" }}>{errors.password}</p>
-                  )}
+                  )} */}
                   <br />
 
                   <div className="div-form-button">
-                    <button>Login
-                      {/* <Link to="/Dashboard" style={{ textDecoration: "none" }}>
-                        Login
-                      </Link> */}
-                    </button>
+                    <button>Login</button>
                     <Link to="/PassReset" className="fpass">
                       Forget password?
                     </Link>
@@ -98,6 +107,7 @@ const Login = () => {
                 </form>
               </div>
             </div>
+            <h3>{message}</h3>
           </div>
         </div>
       </div>
