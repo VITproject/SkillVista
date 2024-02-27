@@ -57,7 +57,7 @@ const facultySignIn = async (req, res) => {
 };
 
 const studentSignUp = async (req, res) => {
-  const { name, email, password, collegeId,courses } = req.body;
+  const { name, email, password, collegeId, courses } = req.body;
   try {
     const existingStudent = await Student.findOne({ email });
     if (existingStudent) {
