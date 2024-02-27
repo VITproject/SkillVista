@@ -8,8 +8,7 @@ const videoSchema = new mongoose.Schema({
 });
 
 const questionSchema = new mongoose.Schema({
-  question_id: mongoose.Schema.Types.ObjectId,
-  text: String,
+  question: String,
   options: [String],
   correct_option: String,
 });
@@ -20,29 +19,43 @@ const marksSchema = new mongoose.Schema({
 });
 
 const quizSchema = new mongoose.Schema({
-  quiz_id: mongoose.Schema.Types.ObjectId,
   title: String,
   questions: [questionSchema],
   marks: [marksSchema],
 });
 
 const lectureSchema = new mongoose.Schema({
-  lecture_id: mongoose.Schema.Types.ObjectId,
   title: String,
   video: videoSchema,
-  quiz: quizSchema,
+  quiz: [quizSchema],
 });
 
 const subjectSchema = new mongoose.Schema({
-  subject_id: mongoose.Schema.Types.ObjectId,
-  subject_name: String,
-  lectures: [lectureSchema],
+  faculty_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Faculty'
+  },
+  subject_name: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
+  lectures: [lectureSchema]
 });
 
 const courseSchema = new mongoose.Schema({
-  course_name: String,
-  faculty_id: mongoose.Schema.Types.ObjectId,
-  subjects: [subjectSchema],
+  course_name: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+  },
+  createdBy: String,
+  faculty_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Faculty'
+  }, subjects: [subjectSchema]
 });
 
 const Courses = mongoose.model("Courses", courseSchema);
