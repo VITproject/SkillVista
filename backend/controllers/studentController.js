@@ -152,10 +152,22 @@ const accessSubjectMaterials = async (req, res) => {
   }
 };
 
+const getCoursesInfo = async (req, res) => {
+  const { course_name } = req.body;
+  console.log(course_name);
+  try {
+    const course = await Courses.findOne({ course_name });
+    res.json(course);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 module.exports = {
   getAllStudents,
   getStudentById,
+  getCoursesInfo,
   registerForCourse,
   registerForSubject,
   accessSubjectMaterials,

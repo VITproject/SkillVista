@@ -17,13 +17,11 @@ router.post('/createCourse', facultyController.createCourse);//
 
 router.post('/createSubject', facultyController.createSubject);//
 
-router.post('/:subject_id/addLecture', facultyController.addLecture);
-
-router.post('/:lecture_id/addQuiz', facultyController.addQuiz);
+router.post('/addLecture', facultyController.addLecture);//
 
 router.delete('/:course_id/removeStudent/:student_id', facultyController.removeStudent);
 
-router.delete('/:course_id/removeSubject/:subject_id', facultyController.removeSubject);
+router.delete('/removeSubject', facultyController.removeSubject);//
 
 router.delete('/deleteCourse', facultyController.deleteCourse);//
 

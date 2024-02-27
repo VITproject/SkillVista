@@ -8,8 +8,7 @@ const videoSchema = new mongoose.Schema({
 });
 
 const questionSchema = new mongoose.Schema({
-  question_id: mongoose.Schema.Types.ObjectId,
-  text: String,
+  question: String,
   options: [String],
   correct_option: String,
 });
@@ -20,17 +19,15 @@ const marksSchema = new mongoose.Schema({
 });
 
 const quizSchema = new mongoose.Schema({
-  quiz_id: mongoose.Schema.Types.ObjectId,
   title: String,
   questions: [questionSchema],
   marks: [marksSchema],
 });
 
 const lectureSchema = new mongoose.Schema({
-  lecture_id: mongoose.Schema.Types.ObjectId,
   title: String,
   video: videoSchema,
-  quiz: quizSchema,
+  quiz: [quizSchema],
 });
 
 const subjectSchema = new mongoose.Schema({

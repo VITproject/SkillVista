@@ -112,72 +112,38 @@ const createSubject = async (req, res) => {
   }
 };
 
-
-// Add lectures under faculty -> coursec -> Subject
-
 const addLecture = async (req, res) => {
-  const { course_id, subject_id } = req.body;
-  const { title, video_url, quiz } = req.body;
+  const { course_name, subject_name } = req.body;
+  const { lecture_title, video_url, quiz_title, questions } = req.body;
 
   try {
-    const course = await Courses.findById(course_id);
+    const course = await Courses.findOne({ course_name });
 
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
     }
+    const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
 
-    const subject = course.subjects.find((s) => s._id.toString() === subject_id);
-
-    if (!subject) {
-      return res.status(404).json({ error: 'Subject not found' });
+    if (subjectIndex === -1) {
+      return res.status(404).json({ error: 'Subject not found in the course' });
     }
 
     const newLecture = {
-      title,
+      title: lecture_title,
       video: { url: video_url },
-      quiz,
+      quiz: [
+        {
+          title: quiz_title,
+          questions: questions.map(q => ({
+            question: q.question,
+            options: q.options,
+            correctAnswer: q.correctAnswer
+          }))
+        },
+      ],
     };
 
-    subject.lectures.push(newLecture);
-    const updatedCourse = await course.save();
-
-    res.status(201).json(updatedCourse);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// Add Quiz under faculty -> coursec -> Subject ->lecture
-
-const addQuiz = async (req, res) => {
-  const { course_id, subject_id, lecture_id } = req.body;
-  const { title, questions } = req.body;
-
-  try {
-    const course = await Courses.findById(course_id);
-
-    if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
-    }
-
-    const subject = course.subjects.find((s) => s._id.toString() === subject_id);
-
-    if (!subject) {
-      return res.status(404).json({ error: 'Subject not found' });
-    }
-
-    const lecture = subject.lectures.find((l) => l._id.toString() === lecture_id);
-
-    if (!lecture) {
-      return res.status(404).json({ error: 'Lecture not found' });
-    }
-
-    const newQuiz = {
-      title,
-      questions,
-    };
-
-    lecture.quiz.push(newQuiz);
+    course.subjects[subjectIndex].lectures.push(newLecture);
     const updatedCourse = await course.save();
 
     res.status(201).json(updatedCourse);
@@ -216,25 +182,31 @@ const removeStudent = async (req, res) => {
 // Removing the subject from course
 
 const removeSubject = async (req, res) => {
-  const { course_id, subject_id } = req.body;
+  const { course_name, subject_name } = req.body;
 
   try {
-    const course = await Courses.findById(course_id);
+    const course = await Courses.findOne({ course_name });
 
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    // Remove subject from the course
-    course.subjects = course.subjects.filter((s) => s._id.toString() !== subject_id);
+    const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
+
+    if (subjectIndex === -1) {
+      return res.status(404).json({ error: 'Subject not found in the course' });
+    }
+
+    course.subjects.splice(subjectIndex, 1);
 
     await course.save();
 
-    res.json({ message: 'Subject removed from the course successfully' });
+    res.json({ message: 'Subject removed from the course successfully', course });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Deleting the course 
 
@@ -276,7 +248,6 @@ module.exports = {
   createCourse,
   createSubject,
   addLecture,
-  addQuiz,
 
   //Removing the objects
 
