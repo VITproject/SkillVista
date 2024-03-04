@@ -10,12 +10,9 @@ const studentSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  collegeId: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-    lowercase: true,
+  ban: {
+    type: Date,
+    default: null,
   },
   password: {
     type: String,
@@ -24,7 +21,6 @@ const studentSchema = new mongoose.Schema({
   },
   courses: [
     {
-      course_id: mongoose.Schema.Types.ObjectId,
       course_name: String,
     },
   ],
