@@ -1,4 +1,4 @@
-require("dotenv").config(); // Load environment variables from .env file
+require("dotenv").config(); // Loading environment variables from .env file
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -17,6 +17,7 @@ connectToDatabase();
 
 app.use("/auth", authRoutes);
 
+// Include facultyMiddleware
 app.use("/faculty", authMiddleware, facultyMiddleware, facultyRoutes);
 app.use("/student", authMiddleware, studentRoutes);
 
@@ -28,3 +29,6 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Comment the line below if needed
+// app.use("/faculty", authMiddleware, facultyRoutes);

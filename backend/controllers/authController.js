@@ -88,7 +88,7 @@ const studentSignIn = async (req, res) => {
     if (!student) {
       return res.status(404).json({ error: "Student not found" });
     }
-    const isPasswordValid = bcrypt.compare(password, student.password);
+    const isPasswordValid = await bcrypt.compare(password, student.password);
     if (!isPasswordValid) {
       res.status(401).json({ error: "Invalid password" });
       return;

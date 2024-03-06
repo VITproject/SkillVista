@@ -104,7 +104,7 @@ const addLecture = async (req, res) => {
   const { title, video_url, quiz } = req.body;
 
   try {
-    const course = await Courses.findById(course_id);
+    const course = Courses.findById(course_id);
 
     if (!course) {
       return res.status(404).json({ error: 'Course not found' });
@@ -131,10 +131,8 @@ const addLecture = async (req, res) => {
   }
 };
 
-// Add Quiz under faculty -> coursec -> Subject ->lecture
-
 const addQuiz = async (req, res) => {
-  const { course_id, subject_id, lecture_id } = req.body;
+  const { course_id, subject_id, lecture_id } = req.params;
   const { title, questions } = req.body;
 
   try {
@@ -158,7 +156,7 @@ const addQuiz = async (req, res) => {
 
     const newQuiz = {
       title,
-      questions,
+      questions,  
     };
 
     lecture.quiz.push(newQuiz);
@@ -240,19 +238,28 @@ const deleteCourse = async (req, res) => {
 
 const getCoursesInfo = async (req, res) => {
   const faculty_id = req.empId;
+
   try {
     // Retrieve courses with information
+    const coursesInfo = await Courses.aggregate([
+      { $match: { faculty_id } },
+      {
+        $project: {
+          numberOfCourses: { $size: '$subjects' },
+          noOfSubjects: { $size: '$subjects' },
+          noOfLectures: { $sum: { $map: { input: '$subjects', as: 'subject', in: { $size: '$$subject.lectures' } } } },
+          noOfQuizzes: { $sum: { $map: { input: '$subjects.lectures.quiz', as: 'lecture', in: { $size: '$$lecture.questions' } } } },
+          noOfStudents: { $sum: { $map: { input: '$subjects.lectures.quiz.questions.students', as: 'question', in: { $size: '$$question' } } } },
+        },
+      },
+    ]);
 
-    const courses = await Courses.find({ faculty_id }).populate({
-      path: 'subjects.lectures.quiz.questions.students',
-      model: 'Student',
-    });
-
-    res.json(courses);
+    res.json(coursesInfo);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 
 module.exports = {
@@ -272,5 +279,3 @@ module.exports = {
   // info
   getCoursesInfo,
 };
-
-

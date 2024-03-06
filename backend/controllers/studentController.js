@@ -17,14 +17,21 @@ const getAllStudents = async (req, res) => {
 // Get student by ID
 
 const getStudentById = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     const student = await Student.findById(id);
+    if (!student) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
     res.json(student);
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({ error: 'Invalid ID format' });
+    }
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Register student for a course
 
@@ -150,6 +157,29 @@ const accessSubjectMaterials = async (req, res) => {
   }
 };
 
+const getStudentCoursesInfo = async (req, res) => {
+  const student_id = req.studentId;
+
+  try {
+    // Retrieve courses with information for the student
+    const studentInfo = await Student.aggregate([
+      { $match: { _id: student_id } },
+      {
+        $project: {
+          numberOfCourses: { $size: '$courses' },
+          noOfSubjects: { $sum: { $map: { input: '$courses', as: 'course', in: { $size: '$$course.subjects' } } } },
+          noOfLectures: { $sum: { $map: { input: '$courses.subjects.lectures', as: 'lecture', in: { $size: '$$lecture' } } } },
+          noOfQuizzes: { $sum: { $map: { input: '$courses.subjects.lectures.quiz', as: 'lecture', in: { $size: '$$lecture.questions' } } } },
+        },
+      },
+    ]);
+
+    res.json(studentInfo);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 
 module.exports = {
   getAllStudents,
@@ -157,4 +187,5 @@ module.exports = {
   registerForCourse,
   registerForSubject,
   accessSubjectMaterials,
+  getStudentCoursesInfo,
 };
