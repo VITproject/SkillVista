@@ -1,19 +1,19 @@
-import React from 'react';
-import React from 'react';
-import { Row, Col, Card, ProgressBar, Button, Badge } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
-import Rating from 'react-rating';
-import Glide from 'components/carousel/Glide';
-import HtmlHead from 'components/html-head/HtmlHead';
-import BreadcrumbList from 'components/breadcrumb-list/BreadcrumbList';
-import CsLineIcons from 'cs-line-icons/CsLineIcons';
-import YourTimeChart from './components/YourTimeChart';
+import React from "react";
+import { Row, Col, Card, ProgressBar, Button, Badge } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import Rating from "react-rating";
+import Glide from "components/carousel/Glide";
+import HtmlHead from "components/html-head/HtmlHead";
+import BreadcrumbList from "components/breadcrumb-list/BreadcrumbList";
+import CsLineIcons from "cs-line-icons/CsLineIcons";
+import YourTimeChart from "./components/YourTimeChart";
+
 
 const ElearningDashboard = () => {
-  const title = 'E-learning Dashboard';
-  const description = 'Elearning Portal E-learning Dashboard Page';
+  const title = "E-learning Dashboard";
+  const description = "Elearning Portal E-learning Dashboard Page";
 
-  const breadcrumbs = [{ to: '', text: 'Home' }];
+  const breadcrumbs = [{ to: "", text: "Home" }];
   return (
     <>
       <HtmlHead title={title} description={description} />
@@ -38,8 +38,16 @@ const ElearningDashboard = () => {
             <Row className="g-0 sh-14">
               <Col xs="auto" className="position-relative">
                 <NavLink to="/courses/detail">
-                  <img src="/img/product/small/product-1.webp" alt="alternate text" className="card-img card-img-horizontal sw-14 sw-lg-18" />
-                  <Button variant="foreground" size="sm" className="btn-icon-only px-3 position-absolute absolute-center opacity-75 pe-none">
+                  <img
+                    src="/img/product/small/product-1.webp"
+                    alt="alternate text"
+                    className="card-img card-img-horizontal sw-14 sw-lg-18"
+                  />
+                  <Button
+                    variant="foreground"
+                    size="sm"
+                    className="btn-icon-only px-3 position-absolute absolute-center opacity-75 pe-none"
+                  >
                     <CsLineIcons icon="play" size="16" fill="var(--primary)" />
                   </Button>
                 </NavLink>
@@ -48,7 +56,9 @@ const ElearningDashboard = () => {
                 <Card.Body className="py-0 h-100 d-flex align-items-center">
                   <div className="w-100">
                     <div className="d-flex flex-row justify-content-between mb-2">
-                      <NavLink to="/courses/detail">Introduction to Baking Cakes</NavLink>
+                      <NavLink to="/courses/detail">
+                        Introduction to Baking Cakes
+                      </NavLink>
                       <div className="text-muted">67%</div>
                     </div>
                     <ProgressBar className="progress-md mb-2" now={67} />
@@ -61,8 +71,16 @@ const ElearningDashboard = () => {
             <Row className="g-0 sh-14">
               <Col xs="auto" className="position-relative">
                 <NavLink to="/courses/detail">
-                  <img src="/img/product/small/product-2.webp" alt="alternate text" className="card-img card-img-horizontal sw-14 sw-lg-18" />
-                  <Button variant="foreground" size="sm" className="btn-icon-only px-3 position-absolute absolute-center opacity-75 pe-none">
+                  <img
+                    src="/img/product/small/product-2.webp"
+                    alt="alternate text"
+                    className="card-img card-img-horizontal sw-14 sw-lg-18"
+                  />
+                  <Button
+                    variant="foreground"
+                    size="sm"
+                    className="btn-icon-only px-3 position-absolute absolute-center opacity-75 pe-none"
+                  >
                     <CsLineIcons icon="play" size="16" fill="var(--primary)" />
                   </Button>
                 </NavLink>
@@ -84,8 +102,16 @@ const ElearningDashboard = () => {
             <Row className="g-0 sh-14">
               <Col xs="auto" className="position-relative">
                 <NavLink to="/courses/detail">
-                  <img src="/img/product/small/product-3.webp" alt="alternate text" className="card-img card-img-horizontal sw-14 sw-lg-18" />
-                  <Button variant="foreground" size="sm" className="btn-icon-only px-3 position-absolute absolute-center opacity-75 pe-none">
+                  <img
+                    src="/img/product/small/product-3.webp"
+                    alt="alternate text"
+                    className="card-img card-img-horizontal sw-14 sw-lg-18"
+                  />
+                  <Button
+                    variant="foreground"
+                    size="sm"
+                    className="btn-icon-only px-3 position-absolute absolute-center opacity-75 pe-none"
+                  >
                     <CsLineIcons icon="play" size="16" fill="var(--primary)" />
                   </Button>
                 </NavLink>
@@ -94,7 +120,9 @@ const ElearningDashboard = () => {
                 <Card.Body className="py-0 h-100 d-flex align-items-center">
                   <div className="w-100">
                     <div className="d-flex flex-row justify-content-between mb-2">
-                      <NavLink to="/courses/detail">Sandwich Making Techniques</NavLink>
+                      <NavLink to="/courses/detail">
+                        Sandwich Making Techniques
+                      </NavLink>
                       <div className="text-muted">14%</div>
                     </div>
                     <ProgressBar className="progress-md mb-2" now={14} />
@@ -110,12 +138,19 @@ const ElearningDashboard = () => {
         <Col xl="6" className="mb-5">
           <h2 className="small-title">Recommended for You</h2>
           <Card className="sh-50 sh-md-40 h-xl-100-card hover-img-scale-up">
-            <img src="/img/banner/cta-standard-3.webp" className="card-img h-100 scale position-absolute" alt="card image" />
+            <img
+              src="/img/banner/cta-standard-3.webp"
+              className="card-img h-100 scale position-absolute"
+              alt="card image"
+            />
             <div className="card-img-overlay d-flex flex-column justify-content-between bg-transparent">
               <div>
-                <div className="cta-1 mb-3 text-black w-75 w-sm-50">Introduction to Bread Making</div>
+                <div className="cta-1 mb-3 text-black w-75 w-sm-50">
+                  Introduction to Bread Making
+                </div>
                 <div className="w-50 text-black mb-3">
-                  Liquorice caramels chupa chups bonbon. Jelly-o candy sugar chocolate cake caramels apple pie lollipop jujubes.
+                  Liquorice caramels chupa chups bonbon. Jelly-o candy sugar
+                  chocolate cake caramels apple pie lollipop jujubes.
                 </div>
                 <Rating
                   className="mb-2"
@@ -127,7 +162,10 @@ const ElearningDashboard = () => {
                 <div>$ 27.50</div>
               </div>
               <div>
-                <NavLink to="/courses/detail" className="btn btn-icon btn-icon-start btn-outline-primary mt-3 stretched-link">
+                <NavLink
+                  to="/courses/detail"
+                  className="btn btn-icon btn-icon-start btn-outline-primary mt-3 stretched-link"
+                >
                   <CsLineIcons icon="chevron-right" /> <span>View</span>
                 </NavLink>
               </div>
@@ -162,7 +200,13 @@ const ElearningDashboard = () => {
                   <div className="d-flex sw-6 sh-6 bg-gradient-light mb-4 align-items-center justify-content-center rounded-xl position-relative mt-3">
                     <CsLineIcons icon="burger" className="text-white" />
                     <div className="achievement bg position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -171,7 +215,13 @@ const ElearningDashboard = () => {
                       </svg>
                     </div>
                     <div className="achievement level position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -181,7 +231,9 @@ const ElearningDashboard = () => {
                     </div>
                   </div>
                   <p className="card-text mb-0 d-flex">Sandwich Novice</p>
-                  <p className="text-center mb-0 d-flex text-primary">Level 1</p>
+                  <p className="text-center mb-0 d-flex text-primary">
+                    Level 1
+                  </p>
                 </Card.Body>
               </Card>
             </Glide.Item>
@@ -191,7 +243,13 @@ const ElearningDashboard = () => {
                   <div className="d-flex sw-6 sh-6 bg-gradient-light mb-4 align-items-center justify-content-center rounded-xl position-relative mt-3">
                     <CsLineIcons icon="loaf" className="text-white" />
                     <div className="achievement bg position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -200,7 +258,13 @@ const ElearningDashboard = () => {
                       </svg>
                     </div>
                     <div className="achievement level position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -210,7 +274,9 @@ const ElearningDashboard = () => {
                     </div>
                   </div>
                   <p className="card-text mb-0 d-flex">Bread Expert</p>
-                  <p className="text-center mb-0 d-flex text-primary">Level 3</p>
+                  <p className="text-center mb-0 d-flex text-primary">
+                    Level 3
+                  </p>
                 </Card.Body>
               </Card>
             </Glide.Item>
@@ -220,7 +286,13 @@ const ElearningDashboard = () => {
                   <div className="d-flex sw-6 sh-6 bg-gradient-light mb-4 align-items-center justify-content-center rounded-xl position-relative mt-3">
                     <CsLineIcons icon="cupcake" className="text-white" />
                     <div className="achievement bg position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -229,7 +301,13 @@ const ElearningDashboard = () => {
                       </svg>
                     </div>
                     <div className="achievement level position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -239,7 +317,9 @@ const ElearningDashboard = () => {
                     </div>
                   </div>
                   <p className="card-text mb-0 d-flex">Cake Apprentice</p>
-                  <p className="text-center mb-0 d-flex text-primary">Level 2</p>
+                  <p className="text-center mb-0 d-flex text-primary">
+                    Level 2
+                  </p>
                 </Card.Body>
               </Card>
             </Glide.Item>
@@ -249,7 +329,13 @@ const ElearningDashboard = () => {
                   <div className="d-flex sw-6 sh-6 bg-gradient-light mb-4 align-items-center justify-content-center rounded-xl position-relative mt-3">
                     <CsLineIcons icon="radish" className="text-white" />
                     <div className="achievement bg position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -258,7 +344,13 @@ const ElearningDashboard = () => {
                       </svg>
                     </div>
                     <div className="achievement level position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -268,7 +360,9 @@ const ElearningDashboard = () => {
                     </div>
                   </div>
                   <p className="card-text mb-0 d-flex">Vegetable Novice</p>
-                  <p className="text-center mb-0 d-flex text-primary">Level 1</p>
+                  <p className="text-center mb-0 d-flex text-primary">
+                    Level 1
+                  </p>
                 </Card.Body>
               </Card>
             </Glide.Item>
@@ -278,7 +372,13 @@ const ElearningDashboard = () => {
                   <div className="d-flex sw-6 sh-6 bg-gradient-light mb-4 align-items-center justify-content-center rounded-xl position-relative mt-3">
                     <CsLineIcons icon="banana" className="text-white" />
                     <div className="achievement bg position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -287,7 +387,13 @@ const ElearningDashboard = () => {
                       </svg>
                     </div>
                     <div className="achievement level position-absolute">
-                      <svg width="75" height="75" viewBox="0 0 75 75" fill="black" xmlns="http://www.w3.org/2000/svg">
+                      <svg
+                        width="75"
+                        height="75"
+                        viewBox="0 0 75 75"
+                        fill="black"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           fillRule="evenodd"
                           clipRule="evenodd"
@@ -297,7 +403,9 @@ const ElearningDashboard = () => {
                     </div>
                   </div>
                   <p className="card-text mb-0 d-flex">Fruit Master</p>
-                  <p className="text-center mb-0 d-flex text-primary">Level 2</p>
+                  <p className="text-center mb-0 d-flex text-primary">
+                    Level 2
+                  </p>
                 </Card.Body>
               </Card>
             </Glide.Item>
@@ -317,7 +425,9 @@ const ElearningDashboard = () => {
                   <NavLink to="#">
                     <CsLineIcons icon="cupcake" className="text-primary" />
                     <p className="heading mt-3 text-body">Cupcakes</p>
-                    <div className="text-extra-small fw-medium text-muted">14 COURSES</div>
+                    <div className="text-extra-small fw-medium text-muted">
+                      14 COURSES
+                    </div>
                   </NavLink>
                 </Card.Body>
               </Card>
@@ -328,7 +438,9 @@ const ElearningDashboard = () => {
                   <NavLink to="#">
                     <CsLineIcons icon="loaf" className="text-primary" />
                     <p className="heading mt-3 text-body">Breads</p>
-                    <div className="text-extra-small fw-medium text-muted">3 COURSES</div>
+                    <div className="text-extra-small fw-medium text-muted">
+                      3 COURSES
+                    </div>
                   </NavLink>
                 </Card.Body>
               </Card>
@@ -339,7 +451,9 @@ const ElearningDashboard = () => {
                   <NavLink to="#">
                     <CsLineIcons icon="radish" className="text-primary" />
                     <p className="heading mt-3 text-body">Vegetables</p>
-                    <div className="text-extra-small fw-medium text-muted">8 COURSES</div>
+                    <div className="text-extra-small fw-medium text-muted">
+                      8 COURSES
+                    </div>
                   </NavLink>
                 </Card.Body>
               </Card>
@@ -350,7 +464,9 @@ const ElearningDashboard = () => {
                   <NavLink to="#">
                     <CsLineIcons icon="pear" className="text-primary" />
                     <p className="heading mt-3 text-body">Fruits</p>
-                    <div className="text-extra-small fw-medium text-muted">9 COURSES</div>
+                    <div className="text-extra-small fw-medium text-muted">
+                      9 COURSES
+                    </div>
                   </NavLink>
                 </Card.Body>
               </Card>
@@ -362,7 +478,7 @@ const ElearningDashboard = () => {
         {/* Your Time Start */}
         <Col xl="4" className="mb-5">
           <h2 className="small-title">Your Time</h2>
-          <Card style={{ height: '310px' }}>
+          <Card style={{ height: "310px" }}>
             <Card.Body className="h-100">
               <YourTimeChart />
             </Card.Body>
@@ -376,9 +492,16 @@ const ElearningDashboard = () => {
           <Card className="sh-40 h-xl-100-card">
             <Card.Body className="d-flex align-items-center justify-content-center h-100">
               <div className="text-center">
-                <img src="/img/illustration/icon-analytics.webp" className="theme-filter mb-3" alt="launch" />
+                <img
+                  src="/img/illustration/icon-analytics.webp"
+                  className="theme-filter mb-3"
+                  alt="launch"
+                />
                 <p className="mb-3">You are not on any path!</p>
-                <Button variant="primary" className="btn-icon btn-icon-start mt-3 stretched-link">
+                <Button
+                  variant="primary"
+                  className="btn-icon btn-icon-start mt-3 stretched-link"
+                >
                   <CsLineIcons icon="chevron-right" className="text-primary" />
                   <span>Take a Path</span>
                 </Button>
@@ -394,13 +517,23 @@ const ElearningDashboard = () => {
       <Row className="row-cols-1 row-cols-md-2 row-cols-xl-5 g-2">
         <Col>
           <Card className="h-100">
-            <Badge bg="primary" className="me-1 position-absolute e-3 t-n2 z-index-1">
+            <Badge
+              bg="primary"
+              className="me-1 position-absolute e-3 t-n2 z-index-1"
+            >
               POPULAR
             </Badge>
-            <Card.Img src="/img/product/small/product-4.webp" className="card-img-top sh-22" alt="card image" />
+            <Card.Img
+              src="/img/product/small/product-4.webp"
+              className="card-img-top sh-22"
+              alt="card image"
+            />
             <Card.Body>
               <h5 className="heading mb-0">
-                <NavLink to="/courses/detail" className="body-link stretched-link">
+                <NavLink
+                  to="/courses/detail"
+                  className="body-link stretched-link"
+                >
                   Introduction to Bread Making
                 </NavLink>
               </h5>
@@ -413,7 +546,9 @@ const ElearningDashboard = () => {
                   emptySymbol={<i className="cs-star text-primary" />}
                   fullSymbol={<i className="cs-star-full text-primary" />}
                 />
-                <div className="text-muted d-inline-block text-small align-text-top ms-1">(39)</div>
+                <div className="text-muted d-inline-block text-small align-text-top ms-1">
+                  (39)
+                </div>
               </div>
               <div className="card-text mb-0">
                 <div className="text-muted text-overline text-small">
@@ -426,10 +561,17 @@ const ElearningDashboard = () => {
         </Col>
         <Col>
           <Card className="h-100">
-            <Card.Img src="/img/product/small/product-5.webp" className="card-img-top sh-22" alt="card image" />
+            <Card.Img
+              src="/img/product/small/product-5.webp"
+              className="card-img-top sh-22"
+              alt="card image"
+            />
             <Card.Body>
               <h5 className="heading mb-0">
-                <NavLink to="/courses/detail" className="body-link stretched-link">
+                <NavLink
+                  to="/courses/detail"
+                  className="body-link stretched-link"
+                >
                   Apple Cake Recipe
                 </NavLink>
               </h5>
@@ -442,7 +584,9 @@ const ElearningDashboard = () => {
                   emptySymbol={<i className="cs-star text-primary" />}
                   fullSymbol={<i className="cs-star-full text-primary" />}
                 />
-                <div className="text-muted d-inline-block text-small align-text-top ms-1">(221)</div>
+                <div className="text-muted d-inline-block text-small align-text-top ms-1">
+                  (221)
+                </div>
               </div>
               <div className="card-text mb-0">
                 <div className="text-muted text-overline text-small">
@@ -455,10 +599,17 @@ const ElearningDashboard = () => {
         </Col>
         <Col>
           <Card className="h-100">
-            <Card.Img src="/img/product/small/product-6.webp" className="card-img-top sh-22" alt="card image" />
+            <Card.Img
+              src="/img/product/small/product-6.webp"
+              className="card-img-top sh-22"
+              alt="card image"
+            />
             <Card.Body>
               <h5 className="heading mb-0">
-                <NavLink to="/courses/detail" className="body-link stretched-link">
+                <NavLink
+                  to="/courses/detail"
+                  className="body-link stretched-link"
+                >
                   Dough for the Molds
                 </NavLink>
               </h5>
@@ -471,7 +622,9 @@ const ElearningDashboard = () => {
                   emptySymbol={<i className="cs-star text-primary" />}
                   fullSymbol={<i className="cs-star-full text-primary" />}
                 />
-                <div className="text-muted d-inline-block text-small align-text-top ms-1">(572)</div>
+                <div className="text-muted d-inline-block text-small align-text-top ms-1">
+                  (572)
+                </div>
               </div>
               <div className="card-text mb-0">
                 <div className="text-muted text-overline text-small">
@@ -484,10 +637,17 @@ const ElearningDashboard = () => {
         </Col>
         <Col>
           <Card className="h-100">
-            <Card.Img src="/img/product/small/product-7.webp" className="card-img-top sh-22" alt="card image" />
+            <Card.Img
+              src="/img/product/small/product-7.webp"
+              className="card-img-top sh-22"
+              alt="card image"
+            />
             <Card.Body>
               <h5 className="heading mb-0">
-                <NavLink to="/courses/detail" className="body-link stretched-link">
+                <NavLink
+                  to="/courses/detail"
+                  className="body-link stretched-link"
+                >
                   Fruit Decorations
                 </NavLink>
               </h5>
@@ -500,7 +660,9 @@ const ElearningDashboard = () => {
                   emptySymbol={<i className="cs-star text-primary" />}
                   fullSymbol={<i className="cs-star-full text-primary" />}
                 />
-                <div className="text-muted d-inline-block text-small align-text-top ms-1">(25)</div>
+                <div className="text-muted d-inline-block text-small align-text-top ms-1">
+                  (25)
+                </div>
               </div>
               <div className="card-text mb-0">
                 <div className="text-muted text-overline text-small">
@@ -513,10 +675,17 @@ const ElearningDashboard = () => {
         </Col>
         <Col className="d-none d-xl-block">
           <Card className="h-100">
-            <Card.Img src="/img/product/small/product-8.webp" className="card-img-top sh-22" alt="card image" />
+            <Card.Img
+              src="/img/product/small/product-8.webp"
+              className="card-img-top sh-22"
+              alt="card image"
+            />
             <Card.Body>
               <h5 className="heading mb-0">
-                <NavLink to="/courses/detail" className="body-link stretched-link">
+                <NavLink
+                  to="/courses/detail"
+                  className="body-link stretched-link"
+                >
                   14 Facts About Sugar
                 </NavLink>
               </h5>
@@ -529,7 +698,9 @@ const ElearningDashboard = () => {
                   emptySymbol={<i className="cs-star text-primary" />}
                   fullSymbol={<i className="cs-star-full text-primary" />}
                 />
-                <div className="text-muted d-inline-block text-small align-text-top ms-1">(472)</div>
+                <div className="text-muted d-inline-block text-small align-text-top ms-1">
+                  (472)
+                </div>
               </div>
               <div className="card-text mb-0">
                 <div className="text-muted text-overline text-small">

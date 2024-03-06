@@ -1,11 +1,9 @@
-import React from 'react';
-  /* eslint-disable no-underscore-dangle,no-unused-vars */
-import React, { useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
-import { Chart, registerables } from 'chart.js';
-
-import { useSelector } from 'react-redux';
-import CsLineIcons from 'cs-line-icons/CsLineIcons';
+import React from "react";
+import { useEffect, useRef } from "react";
+import ReactDOM from "react-dom";
+import { Chart, registerables } from "chart.js";
+import { useSelector } from "react-redux";
+import CsLineIcons from "cs-line-icons/CsLineIcons";
 
 const YourTimeChart = () => {
   const { themeValues } = useSelector((state) => state.settings);
@@ -13,10 +11,10 @@ const YourTimeChart = () => {
   const tooltipRef = useRef(null);
 
   const ExternalTooltip = React.useCallback(({ chart, tooltip }) => {
-    let color = '';
-    let text = '';
-    let value = '';
-    let icon = '';
+    let color = "";
+    let text = "";
+    let value = "";
+    let icon = "";
     const positionY = chart.canvas.offsetTop;
     const positionX = chart.canvas.offsetLeft;
 
@@ -38,11 +36,11 @@ const YourTimeChart = () => {
       icon = chart.data.icons[dataIndex];
     }
 
-    tooltipRef.current.classList.remove('above', 'below', 'no-transform');
+    tooltipRef.current.classList.remove("above", "below", "no-transform");
     if (tooltip.yAlign) {
       tooltipRef.current.classList.add(tooltip.yAlign);
     } else {
-      tooltipRef.current.classList.add('no-transform');
+      tooltipRef.current.classList.add("no-transform");
     }
 
     tooltipRef.current.style.opacity = opacity;
@@ -51,13 +49,17 @@ const YourTimeChart = () => {
     ReactDOM.render(
       <>
         <div
-          style={{ borderColor: color, borderWidth: 1, borderStyle: 'solid' }}
+          style={{ borderColor: color, borderWidth: 1, borderStyle: "solid" }}
           className="icon-container  d-flex align-items-center justify-content-center align-self-center rounded-xl sh-5 sw-5 rounded-xl mb-3"
         >
           <CsLineIcons icon={icon} stroke={color} />
         </div>
-        <span className="text d-flex align-middle text-alternate align-items-center text-small">{text}</span>
-        <span className="value d-flex align-middle text-body align-items-center cta-4">{value}</span>
+        <span className="text d-flex align-middle text-alternate align-items-center text-small">
+          {text}
+        </span>
+        <span className="value d-flex align-middle text-body align-items-center cta-4">
+          {value}
+        </span>
       </>,
       tooltipRef.current
     );
@@ -78,19 +80,27 @@ const YourTimeChart = () => {
     return {
       datasets: [
         {
-          label: '',
+          label: "",
           data: [450, 475, 625],
-          backgroundColor: [`rgba(${themeValues.primaryrgb},0.1)`, `rgba(${themeValues.secondaryrgb},0.1)`, `rgba(${themeValues.quaternaryrgb},0.1)`],
-          borderColor: [themeValues.primary, themeValues.secondary, themeValues.quaternary],
+          backgroundColor: [
+            `rgba(${themeValues.primaryrgb},0.1)`,
+            `rgba(${themeValues.secondaryrgb},0.1)`,
+            `rgba(${themeValues.quaternaryrgb},0.1)`,
+          ],
+          borderColor: [
+            themeValues.primary,
+            themeValues.secondary,
+            themeValues.quaternary,
+          ],
         },
       ],
-      labels: ['Burger', 'Cakes', 'Pastry'],
-      icons: ['burger', 'cupcake', 'loaf'],
+      labels: ["Burger", "Cakes", "Pastry"],
+      icons: ["burger", "cupcake", "loaf"],
     };
   }, [themeValues]);
   const config = React.useMemo(() => {
     return {
-      type: 'doughnut',
+      type: "doughnut",
       plugins: [],
       options: {
         plugins: {
@@ -101,14 +111,14 @@ const YourTimeChart = () => {
             external: ExternalTooltip,
           },
           legend: {
-            position: 'bottom',
+            position: "bottom",
             labels: LegendLabels,
           },
           streaming: false,
         },
         interaction: {
           intersect: true,
-          mode: 'point',
+          mode: "point",
         },
         responsive: true,
         maintainAspectRatio: false,
