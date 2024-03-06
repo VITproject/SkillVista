@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+#lesson{
+    width: 100vw;
+    height: 100vh;
+}
+#top-bar{
+    width: 84%;
+    height: 100px;
+    flex-shrink: 0;
+    border: 1px solid black;
+    float:right;
+}
+#top-bar>h2{
+color: #202020;
+font-family: Poppins;
+font-size: 36px;
+font-style: normal;
+font-weight: 500;
+line-height: 48px; /* 133.333% */
+}
+#card-mycourses{
+width: 84%;
+height: 580px;
+flex-shrink: 0;
+border: 1px solid black;
+float:right;
+}
+#slidebar{
+width: 15%;
+height: 100%;
+flex-shrink: 0;
+float: left;
+border: 1px solid black;
+/* opacity: 0.0001; */
+background-color: rgba(255, 255, 255, 0.00);
+}
