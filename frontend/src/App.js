@@ -12,10 +12,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/ElearningDashboard" element={<ElearningDashboard /> }/>
-        {/* <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/passreset" element={<PassReset />} />
-        <Route path="/popup" element={<PopUp />} /> */}
+        <Route path="/popup" element={<PopUp />} />
       </Routes>
     </Router>
   );
