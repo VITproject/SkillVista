@@ -155,4 +155,4 @@ const YourTimeChart = () => {
   );
 };
 
-export default React.memo(YourTimeChart);
+export default YourTimeChart;

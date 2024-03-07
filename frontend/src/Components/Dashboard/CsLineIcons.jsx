@@ -42,4 +42,4 @@ const CsLineIcons = ({
   return <></>;
 };
 
-export default React.memo(CsLineIcons);
+export default CsLineIcons;

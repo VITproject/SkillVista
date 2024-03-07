@@ -4,7 +4,7 @@ import '@glidejs/glide/dist/css/glide.core.min.css';
 import { useWindowSize } from 'hooks/useWindowSize';
 import { useSelector } from 'react-redux';
 import CsLineIcons from 'cs-line-icons/CsLineIcons';
-
+s
 const Glide = ({
   className = '',
   options = {
