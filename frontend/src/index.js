@@ -1,7 +1,7 @@
 import React from "react";
-import { Provider } from "react-redux";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+// getCLS(onPerfEntry);
+import StudentDashboard from "./StudentDashboard";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import {
@@ -11,6 +11,7 @@ import {
   StyledEngineProvider,
 } from "@mui/material";
 import GlobalStyles from "./global";
+import App from "./App";
 import "./index.css";
 
 const muiTheme = createTheme();

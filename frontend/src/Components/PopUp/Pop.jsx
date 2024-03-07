@@ -6,6 +6,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import "./Pop.css";
+import StudentDashboard from '../../StudentDashboard';
+
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -22,8 +24,7 @@ export default function BasicSelect() {
   const handleSubmit = () => {
     // Add your submit logic here
     console.log(`Selected Course: ${course}`);
-
-    navigate("/ElearningDashboard");
+    
   };
 
   return (
@@ -44,7 +45,7 @@ export default function BasicSelect() {
             <MenuItem value="MBA">MBA</MenuItem>
           </Select>
         </FormControl><br />
-        <Link to="">
+        <Link to="/StudentDashboard">
           <Button onClick={handleSubmit}>
             Submit
           </Button>

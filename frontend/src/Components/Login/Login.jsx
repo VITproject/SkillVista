@@ -1,30 +1,29 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import illus from "./login.svg";
 import axios from "axios";
-
 
 const Login = () => {
   const [formData, setFormData] = useState({
     collegeId: "",
     password: "",
   });
-  const navigate = useNavigate(); 
-  const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({}); //form validation error
+  const [message, setMessage] = useState(""); //on-submit error/message
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();  // Prevent default form submission behavior
+  const handleClick = (e) => {
+    e.preventDefault();
 
     try {
+      // Perform form validation
       const validationErrors = {};
       if (formData.collegeId.length < 5) {
-        validationErrors.collegeId = "ID is invalid";
+        validationErrors.collegeId = "ID is unvalid";
       }
       if (formData.password.length < 2) {
         validationErrors.password = "Password required";
@@ -35,14 +34,25 @@ const Login = () => {
         return;
       }
 
-      const response = await axios.post("http://localhost:4000/auth/s-signin", formData);
-      console.log(response.data.collegeId);
-
-      const id = response.data.collegeId;
-      if (id !== "") {
-        navigate('/popup');
-        setMessage(response.data.message);
-      } 
+      const handleResponse = (response) => {
+        console.log(response.data.collegeId);
+        document.cookie = `token=${response.data.token}; expires=${new Date(
+          Date.now() + 3600000
+        ).toUTCString()}; path=/`;
+        const id = response.data.collegeId;
+        if (id !== "") {
+          navigate("/popup"); // Adjust the path according to your routes
+          setMessage(response.data.message);
+        }
+      };
+      // Make a POST request to your backend endpoint
+      axios
+        .post("http://localhost:4000/auth/s-signin", formData)
+        .then(handleResponse)
+        .catch((error) => {
+          console.log(error);
+        });
+      setFormData({ collegeId: "", password: "" });
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +62,6 @@ const Login = () => {
     <div className="Login">
       <div className="div-form-body">
         <div className="div-form-holder">
-        
           <div className="div-form-content">
             <div className="div-form-items">
               <div className="pg-links">
@@ -61,11 +70,11 @@ const Login = () => {
                 </Link>
                 <Link to="/Register" className="pg-a">
                   Register
-                </Link>
+                </Link>{" "}
               </div>
 
               <div className="form">
-                <form onSubmit={handleSubmit}>
+                <form onClick={handleClick}>
                   <input
                     type="text"
                     name="collegeId"
@@ -85,10 +94,13 @@ const Login = () => {
                     placeholder="Enter your password"
                     onChange={handleChange}
                   />
+                  {/* {errors.password && (
+                    <p style={{ color: "red" }}>{errors.password}</p>
+                  )} */}
                   <br />
 
                   <div className="div-form-button">
-                    <button type="submit">Login</button>
+                    <button>Login</button>
                     <Link to="/PassReset" className="fpass">
                       Forget password?
                     </Link>
@@ -114,5 +126,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;

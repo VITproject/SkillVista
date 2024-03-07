@@ -5,9 +5,10 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-import Subject from "./pages/Subject";
+import Subject from "./Components/pages/Subject";
 
-function App() {
+
+function StudentDashboard() {
   const action = useNavigationType();
   const location = useLocation();
   const pathname = location.pathname;
@@ -49,4 +50,4 @@ function App() {
     </Routes>
   );
 }
-export default App;
+export default StudentDashboard;

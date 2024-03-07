@@ -1,6 +1,6 @@
-import ContentFrames from "../components/ContentFrames";
 import styled from "styled-components";
 import { Button } from "@mui/material";
+import ContentFrames from "../ContentFrames";
 
 const ChildFramesChild = styled(Button)`
   height: 216px;

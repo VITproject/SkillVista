@@ -3,8 +3,8 @@ require("dotenv").config();
 
 const { uploadOnCloudinary } = require("../config/cloudinary");
 const Faculty = require("../models/facultyModel");
-const Courses = require('../models/courseModel');
-const jwt = require('jsonwebtoken');
+const Courses = require("../models/courseModel");
+const jwt = require("jsonwebtoken");
 const getAllFaculties = async (req, res) => {
   try {
     const faculties = await Faculty.find();
@@ -56,14 +56,14 @@ const createCourse = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.status(401).json({ message: 'No token provided' });
+      return res.status(401).json({ message: "No token provided" });
     }
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(" ")[1];
     const faculty_id = await getIdFromToken(token);
     const faculty = await Faculty.findById(faculty_id);
 
     if (!faculty) {
-      return res.status(404).json({ error: 'Faculty not found' });
+      return res.status(404).json({ error: "Faculty not found" });
     }
 
     const newCourse = new Courses({
@@ -83,18 +83,16 @@ const createCourse = async (req, res) => {
 // Create Subjects under faculty -> course
 
 const createSubject = async (req, res) => {
-  const { course_name } = req.body;
-  const { subject_name } = req.body;
-  const { empId } = req.body;
+  const { course_name, empId, subject_name } = req.body;
 
   try {
     const course = await Courses.findOne({ course_name });
     const empIdX = await Faculty.findOne({ empId });
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
     if (!empIdX) {
-      return res.status(404).json({ error: 'Faculty not found' });
+      return res.status(404).json({ error: "Faculty not found" });
     }
 
     const newSubject = {
@@ -102,13 +100,37 @@ const createSubject = async (req, res) => {
       faculty_id: empIdX._id,
       lectures: [],
     };
-
     course.subjects.push(newSubject);
-    const updatedCourse = await course.save();
+    if (!empIdX) {
+      empIdX = new Faculty({
+        empId,
+        courses: [],
+      });
+    }
+    const fCourseIndex = empIdX.courses.findIndex(
+      (s) => s.course_name === course_name
+    );
+    if (fCourseIndex === -1) {
+      empIdX.courses.push({
+        course_name,
+        subjects: [
+          {
+            subject_name,
+          },
+        ],
+      });
+    } else {
+      empIdX.courses[fCourseIndex].subjects.push({
+        subject_name,
+      });
+    }
 
-    res.status(201).json(updatedCourse);
+    await course.save();
+    await empIdX.save();
+    res.status(200).json({ message: "Subject added successfully" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -120,12 +142,14 @@ const addLecture = async (req, res) => {
     const course = await Courses.findOne({ course_name });
 
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
-    const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
+    const subjectIndex = course.subjects.findIndex(
+      (s) => s.subject_name === subject_name
+    );
 
     if (subjectIndex === -1) {
-      return res.status(404).json({ error: 'Subject not found in the course' });
+      return res.status(404).json({ error: "Subject not found in the course" });
     }
 
     const newLecture = {
@@ -134,11 +158,11 @@ const addLecture = async (req, res) => {
       quiz: [
         {
           title: quiz_title,
-          questions: questions.map(q => ({
+          questions: questions.map((q) => ({
             question: q.question,
             options: q.options,
-            correctAnswer: q.correctAnswer
-          }))
+            correctAnswer: q.correctAnswer,
+          })),
         },
       ],
     };
@@ -152,8 +176,7 @@ const addLecture = async (req, res) => {
   }
 };
 
-
-// Removing or deleting any thing 
+// Removing or deleting any thing
 
 // fetching the course
 
@@ -164,20 +187,21 @@ const removeStudent = async (req, res) => {
     const course = await Courses.findById(course_id);
 
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
 
     // Remove student from the course
-    course.students = course.students.filter((s) => s.toString() !== student_id);
+    course.students = course.students.filter(
+      (s) => s.toString() !== student_id
+    );
 
     await course.save();
 
-    res.json({ message: 'Student removed from the course successfully' });
+    res.json({ message: "Student removed from the course successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 // Removing the subject from course
 
@@ -188,27 +212,31 @@ const removeSubject = async (req, res) => {
     const course = await Courses.findOne({ course_name });
 
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
 
-    const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
+    const subjectIndex = course.subjects.findIndex(
+      (s) => s.subject_name === subject_name
+    );
 
     if (subjectIndex === -1) {
-      return res.status(404).json({ error: 'Subject not found in the course' });
+      return res.status(404).json({ error: "Subject not found in the course" });
     }
 
     course.subjects.splice(subjectIndex, 1);
 
     await course.save();
 
-    res.json({ message: 'Subject removed from the course successfully', course });
+    res.json({
+      message: "Subject removed from the course successfully",
+      course,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
-// Deleting the course 
+// Deleting the course
 
 const deleteCourse = async (req, res) => {
   const { course_name } = req.body;
@@ -216,12 +244,11 @@ const deleteCourse = async (req, res) => {
   try {
     // Remove the course from the database
     await Courses.findOneAndDelete(course_name);
-    res.json({ message: 'Course deleted successfully' });
+    res.json({ message: "Course deleted successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 // Getting some info about multiple things like
 
@@ -231,8 +258,8 @@ const getCoursesInfo = async (req, res) => {
     // Retrieve courses with information
 
     const courses = await Courses.find({ faculty_id }).populate({
-      path: 'subjects.lectures.quiz.questions.students',
-      model: 'Student',
+      path: "subjects.lectures.quiz.questions.students",
+      model: "Student",
     });
 
     res.json(courses);
@@ -258,5 +285,3 @@ module.exports = {
   // info
   getCoursesInfo,
 };
-
-
