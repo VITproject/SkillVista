@@ -1,11 +1,3 @@
-import React from 'react';
-  
-  const Svgs = () =>  {
-	return (
-	  <div>
-	  </div>
-	);
-  }
   const svgs = {
   abacus:
     '<path d="M3 2V18M17 4 3 4M17 10 3 10M17 16 3 16M17 2V18"></path><circle r="1" transform="matrix(-1 0 0 1 7 4)"></circle><circle r="1" transform="matrix(-1 0 0 1 13 10)"></circle><circle r="1" transform="matrix(-1 0 0 1 7 16)"></circle>',
