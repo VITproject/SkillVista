@@ -7,28 +7,6 @@ import PopUp from "./Components/PopUp/Pop";
 import ElearningDashboard from "./Components/Dashboard/ElearningDashboard";
 
 
-
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route exact path="/" element={<Login />} />
-//         <Route path="/register" element={<Register />} />
-//         <Route path="/Login" element={<Login />} />
-//       </Routes>
-//       <Routes>
-//         <Route exact path="/Login" element={<Login />} />
-//         <Route path="/passreset" element={<PassReset/>} />
-//       </Routes>
-//       <Routes>
-
-//         <Route exact path="/dashboard" element={<Dashboard/>} />
-//       </Routes>
-
-//     </Router>
-//   );
-// }
-
 function App() {
   return (
     <Router>
