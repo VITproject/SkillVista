@@ -1,15 +1,31 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { createRoot } from 'react-dom/client';
-import store from './'; // Adjust the path 
-import App from './App';
-import './index.css';
+import React from "react";
+import { Provider } from "react-redux";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  StyledEngineProvider,
+} from "@mui/material";
+import GlobalStyles from "./global";
+import "./index.css";
 
-const container = document.getElementById('root');
+const muiTheme = createTheme();
+const container = document.getElementById("root");
 const root = createRoot(container);
 
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
+    </StyledEngineProvider>
+  </BrowserRouter>
 );
+reportWebVitals();
