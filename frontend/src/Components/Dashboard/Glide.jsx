@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useEffect } from 'react';
 import '@glidejs/glide/dist/css/glide.core.min.css';
-import { useWindowSize } from 'hooks/useWindowSize';
 import { useSelector } from 'react-redux';
 import CsLineIcons from './CsLineIcons';
-``
+import UseWindowSize from './useWindowSize';
+import GlideJs from '@glidejs/glide';
 
 
 const Glide = ({
@@ -27,7 +28,7 @@ const Glide = ({
 }) => {
   const carouselRef = React.useRef();
   const glideRef = React.useRef();
-  const { width } = useWindowSize();
+  const { width } = UseWindowSize();
 
   const { placementStatus, behaviourStatus, attrMobile } = useSelector((state) => state.menu);
 

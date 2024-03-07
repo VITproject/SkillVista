@@ -1,7 +1,7 @@
 import React from 'react';
 import { Breadcrumb } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { DEFAULT_PATHS } from 'config.js';
+import { DEFAULT_PATHS } from './config.js';
 
 const BreadcrumbList = ({ items = [{ to: '/', text: 'Home' }], basePath = DEFAULT_PATHS.APP }) => {
   return (
