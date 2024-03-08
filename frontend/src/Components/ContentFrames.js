@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 // import logo from ' '; // Adjust the path accordingly
 
 const ContentFramesChild = styled.div`
@@ -129,6 +130,28 @@ const ContentFramesRoot = styled.div`
 `;
 
 const ContentFrames = () => {
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    // Assume you have a function to fetch user data from the API
+    const fetchUserData = async () => {
+      try {
+        // Make an API call to fetch user data
+        const response = await fetch("/student/:{id}"); // Update the API endpoint
+        const data = await response.json();
+
+        // Update the state with the fetched user data
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    // Call the fetchUserData function when the component mounts
+    fetchUserData();
+  }, []); // Trigger the effect only when the component mounts
+
+  
   return (
     <ContentFramesRoot>
       <ContentFramesChild />
@@ -152,9 +175,9 @@ const ContentFrames = () => {
       <SubtitleFrames>
         <SubjectsFrame>
           <NameTexts>
-            <Kapil>Kapil</Kapil>
+            <Kapil>{userData?.collegeId}</Kapil>
           </NameTexts>
-          <Mca>MCA</Mca>
+          <Mca>{userData?.course}</Mca>
         </SubjectsFrame>
       </SubtitleFrames>
       <NoOfSubjectsFrame>

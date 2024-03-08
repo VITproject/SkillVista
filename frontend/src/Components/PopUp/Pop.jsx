@@ -6,30 +6,32 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import "./Pop.css";
-import StudentDashboard from '../../StudentDashboard';
+import {useNavigate } from "react-router-dom";
 
-import { Link, useNavigate } from "react-router-dom";
 
 
 
 export default function BasicSelect() {
-  const [course, setcourse] = React.useState('');
-  const navigate = useNavigate(); 
+  const [course, setCourse] = React.useState('');
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
-    setcourse(event.target.value);
+    setCourse(event.target.value);
     console.log(event.target.value);
   };
 
   const handleSubmit = () => {
-    // Add your submit logic here
-    console.log(`Selected Course: ${course}`);
-    
+    if (course!="") {
+      navigate("/StudentDashboard");
+      console.log(`Selected Course: ${course}`);
+    } else {
+      alert("Please select a course before submitting.");
+    }
   };
 
   return (
     <>
-      <Box sx={{ width: '50%', marginTop: '20%', marginLeft:"25%" }}>
+      <Box sx={{ width: '50%', marginTop: '20%', marginLeft: "25%" }}>
         <h1>Select your Course Carefully*</h1>
         <FormControl fullWidth>
           <InputLabel id="select-label">Course</InputLabel>
@@ -45,11 +47,9 @@ export default function BasicSelect() {
             <MenuItem value="MBA">MBA</MenuItem>
           </Select>
         </FormControl><br />
-        <Link to="/StudentDashboard">
-          <Button onClick={handleSubmit}>
-            Submit
-          </Button>
-        </Link>
+        <Button onClick={handleSubmit}>
+          Submit
+        </Button>
       </Box>
     </>
   );
