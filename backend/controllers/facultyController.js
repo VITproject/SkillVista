@@ -4,6 +4,7 @@ require("dotenv").config();
 const { uploadOnCloudinary } = require("../config/cloudinary");
 const Faculty = require("../models/facultyModel");
 const Student = require('../models/studentModel');
+
 const Courses = require("../models/courseModel");
 const jwt = require("jsonwebtoken");
 const getAllFaculties = async (req, res) => {
@@ -108,7 +109,9 @@ const createSubject = async (req, res) => {
         courses: [],
       });
     }
-    const fCourseIndex = empIdX.courses.findIndex((s) => s.course_name === course_name);
+    const fCourseIndex = empIdX.courses.findIndex(
+      (s) => s.course_name === course_name
+    );
     if (fCourseIndex === -1) {
       empIdX.courses.push({
         course_name,
@@ -142,7 +145,10 @@ const addLecture = async (req, res) => {
     if (!course) {
       return res.status(404).json({ error: "Course not found" });
     }
-    const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
+
+    const subjectIndex = course.subjects.findIndex(
+      (s) => s.subject_name === subject_name
+    );
 
     if (subjectIndex === -1) {
       return res.status(404).json({ error: "Subject not found in the course" });
@@ -158,7 +164,7 @@ const addLecture = async (req, res) => {
             question: q.question,
             options: q.options,
             correctAnswer: q.correctAnswer,
-          }))
+          })),
         },
       ],
     };
@@ -175,7 +181,7 @@ const addLecture = async (req, res) => {
 // Removing or deleting any thing
 
 const banStudent = async (req, res) => {
-  const { student_id } = req.params;
+  /*const { student_id } = req.params;
   console.log(student_id);
   const { banDurationHours } = req.body;
   try {
@@ -183,9 +189,29 @@ const banStudent = async (req, res) => {
     banExpiration.setHours(banExpiration.getHours() + banDurationHours);
     await Student.findByIdAndUpdate(student_id, { ban: banExpiration });
     res.status(200).json({ message: 'Student banned successfully' });
+// fetching the course
+
+const removeStudent = async (req, res) => {
+  const { course_id, student_id } = req.body;
+
+  try {
+    const course = await Courses.findById(course_id);
+
+    if (!course) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    // Remove student from the course
+    course.students = course.students.filter(
+      (s) => s.toString() !== student_id
+    );
+
+    await course.save();
+
+    res.json({ message: "Student removed from the course successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
-  }
+  }*/
 };
 
 // Removing the subject from course
@@ -221,7 +247,6 @@ const removeSubject = async (req, res) => {
     if (subjectIndex === -1) {
       return res.status(404).json({ error: "Subject not found in the course" });
     }
-
     faculty.courses[courseIndexInFaculty].subjects.splice(subjectIndexInFaculty, 1);
     course.subjects.splice(subjectIndex, 1);
 
@@ -242,8 +267,7 @@ const removeSubject = async (req, res) => {
   }
 };
 
-
-// Deleting the course 
+// Deleting the course
 
 const deleteCourse = async (req, res) => {
   const { course_name } = req.body;
@@ -251,11 +275,12 @@ const deleteCourse = async (req, res) => {
   try {
     // Remove the course from the database
     await Courses.findOneAndDelete(course_name);
-    res.json({ message: 'Course deleted successfully' });
+    res.json({ message: "Course deleted successfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 const getCoursesInfo = async (req, res) => {
   const faculty_id = req.empId;
@@ -286,9 +311,8 @@ module.exports = {
   removeSubject,
   deleteCourse,
   banStudent,
+  //removeStudent,
 
   // info
   getCoursesInfo,
 };
-
-
