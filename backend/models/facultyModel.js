@@ -17,13 +17,6 @@ const courseSchema = new mongoose.Schema({
 
 const facultySchema = new mongoose.Schema({
   name: String,
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-    lowercase: true,
-  },
   empId: {
     type: Number,
     unique: true,

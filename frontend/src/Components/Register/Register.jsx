@@ -23,9 +23,45 @@ const Register = () => {
     setErrors({ ...errors, [e.target.name]: '' }); // Clear validation error on change
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     // Perform form validation
+  //     const validationErrors = {};
+      
+  //     if (formData.password.length < 8) {
+  //       validationErrors.password = 'Password must be at least 8 characters';
+  //     }
+  //     if (formData.password !== formData.confirmPassword) {
+  //       validationErrors.confirmPassword = 'Passwords do not match';
+  //     }
+
+  //     if (Object.keys(validationErrors).length > 0) {
+  //       setErrors(validationErrors);
+  //       return;
+  //     }
+
+  //     // Make a POST request to your backend endpoint
+  //     const id=formData.collegeId;
+  //     if(id!==parseInt(id))
+  //       await axios.post('http://localhost:4000/auth/s-signup', formData);
+  //     else
+  //       await axios.post('http://localhost:4000/auth/f-signup', formData);
+
+
+  //     // Clear the form after successful registration
+  //     setFormData({collegeId:'', name: '', password: '', confirmPassword: '' });
+  //     setMessage("Registration Successfull");
+  //   } 
+  //   catch (error) {
+  //     //console.error(error);
+  //     setIsError(error.message+": User Already Exist Refresh And Try Again");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       // Perform form validation
       const validationErrors = {};
@@ -36,23 +72,31 @@ const Register = () => {
       if (formData.password !== formData.confirmPassword) {
         validationErrors.confirmPassword = 'Passwords do not match';
       }
-
       if (Object.keys(validationErrors).length > 0) {
         setErrors(validationErrors);
         return;
       }
-
-      // Make a POST request to your backend endpoint
-      // if(form.collegeId!=parseInt)
-     await axios.post('http://localhost:4000/auth/s-signup', formData);
-
+  
+      // Choose API endpoint based on whether collegeId consists only of digits
+      const isNumeric = /^\d+$/.test(formData.collegeId);
+      const apiEndpoint = isNumeric ? "f-signup" : "s-signup";
+  
+      // Build the data object based on the selected API endpoint
+      const requestData =
+        apiEndpoint === "f-signup"
+          ? { empId: formData.collegeId, password: formData.password }
+          : { collegeId: formData.collegeId, password: formData.password };
+  
+      // Make a POST request to the selected backend endpoint
+       await axios.post(`http://localhost:4000/auth/${apiEndpoint}`, requestData);
+  
       // Clear the form after successful registration
-      setFormData({ email: '', collegeId:'', name: '', password: '', confirmPassword: '' });
+      setFormData({collegeId:'', name: '', password: '', confirmPassword: '' });
       setMessage("Registration Successfull");
     } 
     catch (error) {
-      //console.error(error);
-      setIsError(error.message+": User Already Exist Refresh And Try Again");
+      console.error(error);
+      setIsError(error.message);
     }
   };
 
@@ -109,6 +153,6 @@ const Register = () => {
       </div>
     </div>
   );
-};
+  };
 
 export default Register;

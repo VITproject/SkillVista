@@ -93,14 +93,16 @@ const Login = () => {
     const response = await axios.post(`http://localhost:4000/auth/${apiEndpoint}`, requestData);
 
     // Handle the response and redirection
-    if (response.data.collegeId) {
+    if (response.data.collegeId!=="") {
       document.cookie = `token=${response.data.token}; expires=${new Date(
         Date.now() + 3600000
       ).toUTCString()}; path=/`;
       if (apiEndpoint === "f-signin") {
+        console.log("facult-dashboard");
         navigate("/FacultyDashboard");
+        
       } else {
-        if(response.data.course_name=="")
+        if(response.data.course_name==="")
           navigate("/popup"); // Adjust the path according to your routes
         else
           navigate("/StudentDashboard");

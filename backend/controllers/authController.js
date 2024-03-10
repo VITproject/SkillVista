@@ -5,7 +5,7 @@ const Student = require("../models/studentModel");
 const Faculty = require("../models/facultyModel");
 
 const facultySignUp = async (req, res) => {
-  const { name, email, empId, password } = req.body;
+  const { name, empId, password } = req.body;
   try {
     const existingFaculty = await Faculty.findOne({ empId });
     if (existingFaculty) {
@@ -17,14 +17,9 @@ const facultySignUp = async (req, res) => {
     if (password.length !== 8) {
       return res.status(400).json({ error: "Password must be 8 digits long." });
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      return res.status(400).json({ error: "Invalid email format." });
-    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newFaculty = new Faculty({
       name,
-      email,
       empId,
       password: hashedPassword,
     });
