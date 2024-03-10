@@ -1,19 +1,31 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom/client'; // Import from 'react-dom/client'
-// import App from './App';
-// import './index.css';
-
-// // Use createRoot to create a root for your application
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
-
 import React from "react";
-import ReactDOM from "react-dom";
-//import "./index.css";
+import { createRoot } from "react-dom/client";
+// getCLS(onPerfEntry);
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  StyledEngineProvider,
+} from "@mui/material";
+import GlobalStyles from "./global";
 import App from "./App";
+import "./index.css";
 
-ReactDOM.render(<App/>,document.getElementById('root'));
+const muiTheme = createTheme();
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(
+  <BrowserRouter>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={muiTheme}>
+        <CssBaseline />
+        <GlobalStyles />
+        <App />
+      </ThemeProvider>
+    </StyledEngineProvider>
+  </BrowserRouter>
+);
+reportWebVitals();
