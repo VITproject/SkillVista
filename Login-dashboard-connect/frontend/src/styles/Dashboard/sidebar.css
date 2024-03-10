@@ -1,0 +1,35 @@
+.Sidebar {
+  width: 250px; /* Fixed width for larger screens */
+  flex-shrink: 0; /* Prevent the sidebar from shrinking on smaller screens */
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .Sidebar {
+    width: 100%; /* Full width on small screens */
+    height: auto; /* Auto height on small screens */
+  }
+}
+
+
+.btn {
+  background-color: #e63946; /* Example button color */
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block; /* To make buttons take the full width */
+  width: 100%;
+  text-align: center;
+}
+
+/* Additional styling for hover effect on buttons */
+.btn:hover {
+  background-color: #c72c41; /* Darken button color on hover */
+}
