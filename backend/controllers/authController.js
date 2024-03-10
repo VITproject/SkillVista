@@ -57,28 +57,23 @@ const facultySignIn = async (req, res) => {
 };
 
 const studentSignUp = async (req, res) => {
-  const { name, email, password, collegeId, courses } = req.body;
   try {
-    const existingStudent = await Student.findOne({ email });
+    const { name, password, collegeId } = req.body;
+    const existingStudent = await Student.findOne({ collegeId });
     if (existingStudent) {
       return res
         .status(400)
-        .json({ error: "Student with the same email already exists." });
+        .json({ error: "Student with the same collegeId already exists." });
     }
     if (password.length !== 8) {
       return res.status(400).json({ error: "Password must be 8 digits long." });
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      return res.status(400).json({ error: "Invalid email format." });
-    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const newStudent = new Student({
       name,
-      email,
       collegeId,
       password: hashedPassword,
-      courses,
+      course_name: "",
     });
     const savedStudent = await newStudent.save();
     res.status(201).json({ savedStudent });
@@ -102,7 +97,7 @@ const studentSignIn = async (req, res) => {
     const token = jwt.sign({ collegeId: student.collegeId }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    res.json({ message: "Sign in successful", token, collegeId: student.collegeId });
+    res.json({ message: "Sign in successful", token, collegeId: student.collegeId,course_name:student.course_name });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

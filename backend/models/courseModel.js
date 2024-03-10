@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
 const videoSchema = new mongoose.Schema({
-  video_id: mongoose.Schema.Types.ObjectId,
   title: String,
   url: String,
-  visible_to: [mongoose.Schema.Types.ObjectId],
+  not_visible_to: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student'
+  }],
 });
 
 const questionSchema = new mongoose.Schema({

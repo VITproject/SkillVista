@@ -6,7 +6,6 @@ import illus from './register.svg';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    email: '',
     collegeId:'',
     name: '',
     password: '',
@@ -30,9 +29,7 @@ const Register = () => {
     try {
       // Perform form validation
       const validationErrors = {};
-      if (formData.email.length < 6) {
-        validationErrors.email = 'ID must be at least 6 characters';
-      }
+      
       if (formData.password.length < 8) {
         validationErrors.password = 'Password must be at least 8 characters';
       }
@@ -46,6 +43,7 @@ const Register = () => {
       }
 
       // Make a POST request to your backend endpoint
+      // if(form.collegeId!=parseInt)
      await axios.post('http://localhost:4000/auth/s-signup', formData);
 
       // Clear the form after successful registration
@@ -73,10 +71,7 @@ const Register = () => {
 
               <div className="form">
                 <form onSubmit={handleSubmit}>
-                  <input type="text" name="email" value={formData.email} placeholder="Enter your Email" onChange={handleChange} />
-                  {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-                  <br />
-
+                 
                   <input type="text" name="collegeId" value={formData.collegeId} placeholder="Enter your College ID" onChange={handleChange} />
                   <br/>
 

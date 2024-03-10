@@ -1,5 +1,20 @@
 const mongoose = require("mongoose");
 
+const subjectSchema = new mongoose.Schema({
+  subject_name: {
+    type: String,
+    required: true,
+  },
+});
+
+const courseSchema = new mongoose.Schema({
+  course_name: {
+    type: String,
+    required: true,
+  },
+  subjects: [subjectSchema],
+});
+
 const facultySchema = new mongoose.Schema({
   name: String,
   email: {
@@ -19,11 +34,7 @@ const facultySchema = new mongoose.Schema({
     required: true,
     minLength: 8,
   },
-  subjects: [
-    {
-      subject_id: mongoose.Schema.Types.ObjectId,
-    },
-  ],
+  courses: [courseSchema],
 });
 
 const Faculty = mongoose.model("Faculty", facultySchema);

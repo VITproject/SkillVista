@@ -8,9 +8,6 @@ import Button from '@mui/material/Button';
 import "./Pop.css";
 import {useNavigate } from "react-router-dom";
 
-
-
-
 export default function BasicSelect() {
   const [course, setCourse] = React.useState('');
   const navigate = useNavigate();

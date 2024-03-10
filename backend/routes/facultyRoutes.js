@@ -19,7 +19,7 @@ router.post('/createSubject', facultyController.createSubject);//
 
 router.post('/addLecture', facultyController.addLecture);//
 
-router.delete('/:course_id/removeStudent/:student_id', facultyController.removeStudent);
+router.post('/banStudent/:student_id', facultyController.banStudent);
 
 router.delete('/removeSubject', facultyController.removeSubject);//
 

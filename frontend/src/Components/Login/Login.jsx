@@ -100,7 +100,10 @@ const Login = () => {
       if (apiEndpoint === "f-signin") {
         navigate("/FacultyDashboard");
       } else {
-        navigate("/popup"); // Adjust the path according to your routes
+        if(response.data.course_name=="")
+          navigate("/popup"); // Adjust the path according to your routes
+        else
+          navigate("/StudentDashboard");
       }
     } else {
       setMessage(response.data.message);
