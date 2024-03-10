@@ -1,0 +1,74 @@
+.MainContent {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.MainContent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Reduced the minimum size of the cards */
+    gap: 10px;  /* Adjust the value for desired spacing */
+    align-items: start;
+    padding: 20px;
+}
+
+.subject-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none; /* Remove border */
+    aspect-ratio: 1;
+    padding: 10px; /* Adjust the value for desired spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added a slight shadow */
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5)); /* Translucent gradient background */
+    border-radius: 10px; /* Rounded corners for a modern look */
+}
+
+.subject-card:nth-child(1) {
+    background-color: #fca311; /* Bright orange */
+}
+
+.subject-card:nth-child(2) {
+    background-color: #8338ec; /* Deep purple */
+}
+
+.subject-card:nth-child(3) {
+    background-color: #06d6a0; /* Mint green */
+}
+
+.subject-card:nth-child(4) {
+    background-color: #ff6363; /* Coral pink */
+}
+
+.subject-card:nth-child(5) {
+    background-color: #118ab2; /* Deep blue */
+}
+
+.subject-card:nth-child(6) {
+    background-color: #ff7e67; /* Salmon */
+}
+
+.subject-card:nth-child(7) {
+    background-color: #00adb5; /* Teal */
+}
+
+.subject-card:nth-child(8) {
+    background-color: #8338ec; /* Deep purple */
+}
+
+.subject-card:nth-child(9) {
+    background-color: #3a86ff; /* Sky blue */
+}
+
+/* Repeat the pattern of colors as needed */
+.subject-card:nth-child(n+10):nth-child(odd) {
+    background-color: #fca311; /* Bright orange */
+}
+
+.subject-card:nth-child(n+10):nth-child(even) {
+    background-color: #8338ec; /* Deep purple */
+}
+
+/* Add more rules for additional colors */

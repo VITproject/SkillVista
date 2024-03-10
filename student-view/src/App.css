@@ -1,0 +1,6 @@
+.App {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  width: 100%;
+  min-height: 100vh; /* Use viewport height to ensure full screen coverage */
+}
