@@ -4,8 +4,8 @@ require("dotenv").config();
 const { uploadOnCloudinary } = require("../config/cloudinary");
 const Faculty = require("../models/facultyModel");
 const Student = require('../models/studentModel');
-const Courses = require('../models/courseModel');
-const jwt = require('jsonwebtoken');
+const Courses = require("../models/courseModel");
+const jwt = require("jsonwebtoken");
 const getAllFaculties = async (req, res) => {
   try {
     const faculties = await Faculty.find();
@@ -57,14 +57,14 @@ const createCourse = async (req, res) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.status(401).json({ message: 'No token provided' });
+      return res.status(401).json({ message: "No token provided" });
     }
-    const token = authHeader.split(' ')[1];
+    const token = authHeader.split(" ")[1];
     const faculty_id = await getIdFromToken(token);
     const faculty = await Faculty.findById(faculty_id);
 
     if (!faculty) {
-      return res.status(404).json({ error: 'Faculty not found' });
+      return res.status(404).json({ error: "Faculty not found" });
     }
 
     const newCourse = new Courses({
@@ -90,10 +90,10 @@ const createSubject = async (req, res) => {
     const course = await Courses.findOne({ course_name });
     const empIdX = await Faculty.findOne({ empId });
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
     if (!empIdX) {
-      return res.status(404).json({ error: 'Faculty not found' });
+      return res.status(404).json({ error: "Faculty not found" });
     }
 
     const newSubject = {
@@ -126,10 +126,10 @@ const createSubject = async (req, res) => {
 
     await course.save();
     await empIdX.save();
-    res.status(200).json({ message: 'Subject added successfully' });
+    res.status(200).json({ message: "Subject added successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -140,12 +140,12 @@ const addLecture = async (req, res) => {
     const course = await Courses.findOne({ course_name });
 
     if (!course) {
-      return res.status(404).json({ error: 'Course not found' });
+      return res.status(404).json({ error: "Course not found" });
     }
     const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
 
     if (subjectIndex === -1) {
-      return res.status(404).json({ error: 'Subject not found in the course' });
+      return res.status(404).json({ error: "Subject not found in the course" });
     }
 
     const newLecture = {
@@ -154,10 +154,10 @@ const addLecture = async (req, res) => {
       quiz: [
         {
           title: quiz_title,
-          questions: questions.map(q => ({
+          questions: questions.map((q) => ({
             question: q.question,
             options: q.options,
-            correctAnswer: q.correctAnswer
+            correctAnswer: q.correctAnswer,
           }))
         },
       ],
@@ -171,6 +171,8 @@ const addLecture = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+// Removing or deleting any thing
 
 const banStudent = async (req, res) => {
   const { student_id } = req.params;
@@ -195,7 +197,7 @@ const removeSubject = async (req, res) => {
     const course = await Courses.findOne({ course_name });
     const subject = course.subjects.find(s => s.subject_name === subject_name);
     if (!subject) {
-      return res.status(404).json({ error: 'Subject not found in the course' });
+      return res.status(404).json({ error: "Subject not found in the course" });
     }
     const empIdX = subject.faculty_id;
     const faculty = await Faculty.findById(empIdX);
@@ -203,29 +205,38 @@ const removeSubject = async (req, res) => {
       return res.status(404).json({ error: 'Faculty not found' });
     }
 
-    const courseIndexInFaculty = faculty.courses.findIndex(c => c.course_name === course_name);
-    const subjectIndexInFaculty = faculty.courses[courseIndexInFaculty].subjects.findIndex(s => s.subject_name === subject_name);
-    const subjectIndex = course.subjects.findIndex(s => s.subject_name === subject_name);
+    const courseIndexInFaculty = faculty.courses.findIndex(
+      (c) => c.course_name === course_name
+    );
+    const subjectIndexInFaculty = faculty.courses[courseIndexInFaculty].subjects.findIndex(
+      (s) => s.subject_name === subject_name
+    );
+    const subjectIndex = course.subjects.findIndex(
+      (s) => s.subject_name === subject_name
+    );
 
     if (courseIndexInFaculty === -1) {
-      return res.status(404).json({ error: 'Course not found in faculty' });
+      return res.status(404).json({ error: "Course not found in faculty" });
     }
     if (subjectIndex === -1) {
-      return res.status(404).json({ error: 'Subject not found in the course' });
+      return res.status(404).json({ error: "Subject not found in the course" });
     }
-    
+
     faculty.courses[courseIndexInFaculty].subjects.splice(subjectIndexInFaculty, 1);
     course.subjects.splice(subjectIndex, 1);
 
     if (course.subjects.length === 0) {
       faculty.courses.splice(courseIndexInFaculty, 1);
       await faculty.save();
-    }else{
+    } else {
       await faculty.save();
     }
     await course.save();
 
-    res.json({ message: 'Subject removed from the course successfully', course });
+    res.json({
+      message: 'Subject removed from the course successfully',
+      course,
+    });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -252,8 +263,8 @@ const getCoursesInfo = async (req, res) => {
     // Retrieve courses with information
 
     const courses = await Courses.find({ faculty_id }).populate({
-      path: 'subjects.lectures.quiz.questions.students',
-      model: 'Student',
+      path: "subjects.lectures.quiz.questions.students",
+      model: "Student",
     });
 
     res.json(courses);

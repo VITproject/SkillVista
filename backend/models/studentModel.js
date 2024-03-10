@@ -19,11 +19,15 @@ const studentSchema = new mongoose.Schema({
     required: true,
     minLength: 8,
   },
-  courses: [
-    {
-      course_name: String,
-    },
-  ],
+  name: {
+    type: String,
+    required: true,
+  },
+  course_name:
+  {
+    type: String,
+    trim: true,
+  },
 });
 
 const Student = mongoose.model("Student", studentSchema);

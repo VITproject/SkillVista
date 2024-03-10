@@ -31,73 +31,20 @@ const getStudentById = async (req, res) => {
 // Register student for a course
 
 const registerForCourse = async (req, res) => {
-  const { student_id, course_id } = req.body;
+  const { collegeId } = req.body;
+  const { course_name } = req.params;
   try {
-    const student = await Student.findById(student_id);
-    const course = await Courses.findById(course_id);
+    const course = await Courses.findOne({ course_name });
+    const student = await Student.findOne({ collegeId });
 
-    if (!student || !course) {
-      return res.status(404).json({ message: 'Student or Course not found' });
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
     }
-
-    // Check if student is already registered for the course
-
-    const isRegistered = student.courses.some(course => course.course_id.equals(course_id));
-    if (isRegistered) {
-      return res.status(400).json({ message: 'Student is already registered for the course' });
-    }
-
-    // Register student for the course
-
-    student.courses.push({ course_id, course_name: course.course_name });
+    if (!student)
+      return res.status(404).json({ message: 'Course not found' });
+    student.course_name = course_name;
     await student.save();
-
     res.status(201).json({ message: 'Student registered for the course successfully' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Register student for a subject
-
-const registerForSubject = async (req, res) => {
-  const { student_id, course_id, subject_id } = req.body;
-  try {
-    const student = await Student.findById(student_id);
-    const course = await Courses.findById(course_id);
-
-    if (!student || !course) {
-      return res.status(404).json({ message: 'Student or Course not found' });
-    }
-
-    // Find the subject in the course
-
-    const subject = course.subjects.find(subject => subject.subject_id.equals(subject_id));
-    if (!subject) {
-      return res.status(404).json({ message: 'Subject not found in the course' });
-    }
-
-    // Check if student is already registered for the subject
-
-    const isRegistered = student.courses.some(course => (
-      course.course_id.equals(course_id) && course.subjects.includes(subject_id)
-    ));
-
-    if (isRegistered) {
-      return res.status(400).json({ message: 'Student is already registered for the subject' });
-    }
-
-    // Register student for the subject
-
-    student.courses.forEach(course => {
-      if (course.course_id.equals(course_id)) {
-        course.subjects.push(subject_id);
-      }
-    });
-
-    await student.save();
-
-    res.status(201).json({ message: 'Student registered for the subject successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -169,6 +116,5 @@ module.exports = {
   getStudentById,
   getCoursesInfo,
   registerForCourse,
-  registerForSubject,
   accessSubjectMaterials,
 };

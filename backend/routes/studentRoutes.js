@@ -12,9 +12,7 @@ router.get('/all', studentController.getAllStudents);
 
 router.get('/:id', studentController.getStudentById);
 
-router.post('/:student_id/register/course/:course_id', studentController.registerForCourse);
-
-router.post('/:student_id/register/course/:course_id/subject/:subject_id', studentController.registerForSubject);
+router.post('/register/:course_name', studentController.registerForCourse);//
 
 router.get('/:student_id/subject/:subject_id/materials', studentController.accessSubjectMaterials);
 
