@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import PassReset from "./Components/PassReset/PassReset";
-import StudentDashboard from "./StudentDashboard";
 import PopUp from "./Components/PopUp/Pop"
 import  Vpage from "./Components/VideoPage/vpage";
 import Quiz from "./Components/Quiz/Quiz";
-import FacultyDashboard from "./FacultyDashboard";
+import StudentDashboard from "./Components/StudentDashboard/studentdash";
+import FacultyDashboard from "./Components/FacultyDashboard/facultydash";
 function App() {
   return (
     

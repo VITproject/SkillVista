@@ -144,7 +144,7 @@ const Register = () => {
       <div className="div-img-holder-r">
         <h2>Register</h2>
         <div className="div-info-holder">
-          <div className="img-h">VITedu </div>
+          <div className="img-h">VITVedant </div>
           <div className="pa">LMS by VIT bhopal</div>
           <div className="graphic">
             <img src={illus} alt="illustration" />

@@ -30,7 +30,7 @@ const PassReset = () => {
 
       <div className="div-img-holder">
         <div className="div-info-holder">
-          <div className="h3">Vitedu </div>
+          <div className="h3">VITVedant </div>
           <div className="p">LMS by VIT bhopal</div>
           <div className="graphic">
             <img src={illus} alt="illustration"/>

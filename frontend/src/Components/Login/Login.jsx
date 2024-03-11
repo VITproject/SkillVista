@@ -177,7 +177,7 @@ const Login = () => {
       <div className="div-img-holder">
         <h2>Login</h2>
         <div className="div-info-holder">
-          <div className="h4">VITedu </div>
+          <div className="h4">VITVedant</div>
           <div className="p">LMS by VIT bhopal</div>
           <div className="graphic">
             <img src={illus} alt="illustration" />
