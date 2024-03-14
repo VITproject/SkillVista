@@ -163,7 +163,7 @@ const addLecture = async (req, res) => {
           questions: questions.map((q) => ({
             question: q.question,
             options: q.options,
-            correctAnswer: q.correctAnswer,
+            correct_option: q.correct_option,
           })),
         },
       ],
@@ -316,3 +316,4 @@ module.exports = {
   // info
   getCoursesInfo,
 };
+

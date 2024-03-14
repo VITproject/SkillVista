@@ -1,4 +1,5 @@
 import React from "react";
+// eslint-disable-next-line
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
@@ -8,6 +9,7 @@ import  Vpage from "./Components/VideoPage/vpage";
 import Quiz from "./Components/Quiz/Quiz";
 import StudentDashboard from "./Components/StudentDashboard/studentdash";
 import FacultyDashboard from "./Components/FacultyDashboard/facultydash";
+import UploadLecture from "./Components/UploadLecture/UploadLecure";
 function App() {
   return (
     
@@ -20,6 +22,7 @@ function App() {
       <Route path="/FacultyDashboard" element={<FacultyDashboard/>} />
       <Route path="/Vpage" element={<Vpage/>}/>
       <Route path="/Quiz" element={<Quiz/>}  />
+      <Route path="UploadLecture" element={<UploadLecture/>} />
     </Routes>
 
   );

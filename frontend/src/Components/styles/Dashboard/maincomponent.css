@@ -25,6 +25,9 @@
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5)); /* Translucent gradient background */
     border-radius: 10px; /* Rounded corners for a modern look */
 }
+div Link{
+    text-decoration: none;
+}
 
 .subject-card:nth-child(1) {
     background-color: #fca311; /* Bright orange */

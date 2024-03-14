@@ -7,6 +7,10 @@
     box-sizing: border-box;
     height: 100vh;
   }
+  button Link{
+    color: white;
+    text-decoration: none;
+  }
   
   @media (max-width: 768px) {
     .Sidebar {
