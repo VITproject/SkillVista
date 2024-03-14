@@ -79,13 +79,16 @@ const Login = () => {
           navigate("/StudentDashboard");
         }
       }
-    } else {
-      setMessage(response.data.message);
-    }
+    } 
 
     setFormData({ collegeId: "", password: "" });
   } catch (error) {
     console.error(error);
+    if (error.response && error.response.data && error.response.data.error) {
+      setMessage(error.response.data.error);
+    } else {
+      setMessage("Registration failed. Please try again later.");
+    }
   }
 };
 
