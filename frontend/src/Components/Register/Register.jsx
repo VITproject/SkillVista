@@ -84,8 +84,8 @@ const Register = () => {
       // Build the data object based on the selected API endpoint
       const requestData =
         apiEndpoint === "f-signup"
-          ? { empId: formData.collegeId, password: formData.password }
-          : { collegeId: formData.collegeId, password: formData.password };
+          ? { empId: formData.collegeId, name:formData.name, password: formData.password }
+          : { collegeId: formData.collegeId, name:formData.name, password: formData.password };
   
       // Make a POST request to the selected backend endpoint
        await axios.post(`http://localhost:4000/auth/${apiEndpoint}`, requestData);
@@ -96,7 +96,11 @@ const Register = () => {
     } 
     catch (error) {
       console.error(error);
-      setIsError(error.message);
+      if (error.response && error.response.data && error.response.data.error) {
+        setIsError(error.response.data.error);
+      } else {
+        setIsError("Registration failed. Please try again later.");
+      }
     }
   };
 

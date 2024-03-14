@@ -1,65 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import illus from "./login.svg";
 import axios from "axios";
+import usebearStore from "../../State/state";
 
 const Login = () => {
+
+  // Zustand
+  const storedCourse = localStorage.getItem("couse_name") || "";
+
+
   const [formData, setFormData] = useState({
     collegeId: "",
     password: "",
   });
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({}); //form validation error
-  const [message, setMessage] = useState(""); //on-submit error/message
+  const [errors, setErrors] = useState({}); 
+  const [message, setMessage] = useState(""); 
+
+  // Zustand
+  const setId = usebearStore((state) => state.setId);
+  const setSelectedCourse = usebearStore((state) => state.setSelectedCourse);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     // Perform form validation
-  //     const validationErrors = {};
-  //     if (formData.collegeId.length < 5) {
-  //       validationErrors.collegeId = "ID is unvalid";
-  //     }
-  //     if (formData.password.length < 2) {
-  //       validationErrors.password = "Password required";
-  //     }
-
-  //     if (Object.keys(validationErrors).length > 0) {
-  //       setErrors(validationErrors);
-  //       return;
-  //     }
-
-  //     const handleResponse = (response) => {
-  //       console.log(response.data.collegeId);
-  //       document.cookie = `token=${response.data.token}; expires=${new Date(
-  //         Date.now() + 3600000
-  //       ).toUTCString()}; path=/`;
-  //       const id = response.data.collegeId;
-  //       if (id !== parseInt(id)) {
-  //         navigate("/popup"); // Adjust the path according to your routes
-  //         setMessage(response.data.message);
-  //       }
-  //       else{
-  //         navigate("/FacultyDashboard");
-  //       }
-  //     };
-  //     // Make a POST request to your backend endpoint
-  //     axios
-  //       .post("http://localhost:4000/auth/s-signin", formData)
-  //       .then(handleResponse)
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //     setFormData({ collegeId: "", password: "" });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const handleClick = async (e) => {
   e.preventDefault();
@@ -93,19 +60,24 @@ const Login = () => {
     const response = await axios.post(`http://localhost:4000/auth/${apiEndpoint}`, requestData);
 
     // Handle the response and redirection
-    if (response.data.collegeId!=="") {
+    if (response.data.collegeId !== "") {
       document.cookie = `token=${response.data.token}; expires=${new Date(
         Date.now() + 3600000
       ).toUTCString()}; path=/`;
       if (apiEndpoint === "f-signin") {
         console.log("facult-dashboard");
+         // Zustand -> setting data into local storage
+         setId(response.data.collegeId);
         navigate("/FacultyDashboard");
         
       } else {
-        if(response.data.course_name==="")
+        if(response.data.course_name === "") {
           navigate("/popup"); // Adjust the path according to your routes
-        else
+        } else {
+          setSelectedCourse(response.data.course_name);
+          setId(response.data.collegeId);
           navigate("/StudentDashboard");
+        }
       }
     } else {
       setMessage(response.data.message);
@@ -117,8 +89,10 @@ const Login = () => {
   }
 };
 
-  
-  
+useEffect(() => {
+  setFormData((prevData) => ({...prevData, course_name: storedCourse}));
+}, []);
+
   return (
     <div className="Login">
       <div className="div-form-body">

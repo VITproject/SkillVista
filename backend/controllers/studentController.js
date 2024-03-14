@@ -100,7 +100,7 @@ const accessSubjectMaterials = async (req, res) => {
 };
 
 const getCoursesInfo = async (req, res) => {
-  const { course_name } = req.body;
+  const { course_name } = req.query;
   console.log(course_name);
   try {
     const course = await Courses.findOne({ course_name });
