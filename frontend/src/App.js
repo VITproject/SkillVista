@@ -5,7 +5,7 @@ import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
 import PassReset from "./Components/PassReset/PassReset";
 import PopUp from "./Components/PopUp/Pop"
-import  Vpage from "./Components/VideoPage/vpage";
+import  VideoPage from "./Components/VideoPage/maincontent";
 import Quiz from "./Components/Quiz/Quiz";
 import StudentDashboard from "./Components/StudentDashboard/studentdash";
 import FacultyDashboard from "./Components/FacultyDashboard/facultydash";
@@ -20,7 +20,7 @@ function App() {
       <Route path="/popup" element={<PopUp />} />
       <Route path="/StudentDashboard" element={<StudentDashboard/>} />
       <Route path="/FacultyDashboard" element={<FacultyDashboard/>} />
-      <Route path="/Vpage" element={<Vpage/>}/>
+      <Route path="/Vpage" element={<VideoPage/>}/>
       <Route path="/Quiz" element={<Quiz/>}  />
       <Route path="UploadLecture" element={<UploadLecture/>} />
     </Routes>

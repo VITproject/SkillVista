@@ -1,0 +1,42 @@
+.upload-lecture-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="file"],
+  .form-group input[type="number"],
+  .form-group button {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 5px;
+  }
+  
+  .options {
+    margin-top: 10px;
+  }
+  
+  .options input[type="text"] {
+    margin-top: 5px;
+  }
+  
+  .question-group {
+    margin-top: 20px;
+  }
+  
