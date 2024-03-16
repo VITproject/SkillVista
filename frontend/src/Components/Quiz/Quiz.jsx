@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import './Quiz.css'; // Import CSS file for styling
 
 const Quiz = () => {
-  const [answers, setAnswers] = useState(new Array(5).fill(null));
+  const [answers, setAnswers] = useState(new Array(2).fill(null));
   const questions = [
-    'What is the capital of France?',
-    'Which planet is known as the Red Planet?',
-    'What is the largest mammal in the world?',
-    'What is Variable?',
-    'What is Data Type?'
+    {
+      "question": "What is the main purpose of an operating system?",
+      "options": ["To manage hardware resources", "To provide a graphical user interface", "To run applications", "To store data"],
+      "correct_option": "To manage hardware resources"
+    },
+    {
+      "question": "Which component of an operating system handles process scheduling?",
+      "options": ["Kernel", "Shell", "Compiler", "File System"],
+      "correct_option": "Kernel"
+    }
   ];
 
   const handleAnswerChange = (questionIndex, selectedOption) => {
@@ -20,63 +26,34 @@ const Quiz = () => {
 
   const renderQuestions = () => {
     return questions.map((question, index) => (
-      <div key={index} >
-        <h3>{`${index + 1}. ${question}`}</h3>
-        <ul>
-          <li>
-            <input
-              type="radio"
-              id={`optionA-${index}`}
-              name={`question-${index}`}
-              value="A"
-              checked={answers[index] === 'A'}
-              onChange={() => handleAnswerChange(index, 'A')}
-            />
-            <label htmlFor={`optionA-${index}`}>Option A</label>
-          </li>
-          <li>
-            <input
-              type="radio"
-              id={`optionB-${index}`}
-              name={`question-${index}`}
-              value="B"
-              checked={answers[index] === 'B'}
-              onChange={() => handleAnswerChange(index, 'B')}
-            />
-            <label htmlFor={`optionB-${index}`}>Option B</label>
-          </li>
-          <li>
-            <input
-              type="radio"
-              id={`optionC-${index}`}
-              name={`question-${index}`}
-              value="C"
-              checked={answers[index] === 'C'}
-              onChange={() => handleAnswerChange(index, 'C')}
-            />
-            <label htmlFor={`optionC-${index}`}>Option C</label>
-          </li>
-          <li>
-            <input
-              type="radio"
-              id={`optionD-${index}`}
-              name={`question-${index}`}
-              value="D"
-              checked={answers[index] === 'D'}
-              onChange={() => handleAnswerChange(index, 'D')}
-            />
-            <label htmlFor={`optionD-${index}`}>Option D</label>
-          </li>
-        </ul>
+      <div key={index} className="card">
+        <div className="card-body">
+          <h5 className="card-title">{`${index + 1}. ${question.question}`}</h5>
+          <ul className="options-list">
+            {question.options.map((option, optionIndex) => (
+              <li key={optionIndex}>
+                <input
+                  type="radio"
+                  id={`option-${option}-${index}`}
+                  name={`question-${index}`}
+                  value={option}
+                  checked={answers[index] === option}
+                  onChange={() => handleAnswerChange(index, option)}
+                />
+                <label htmlFor={`option-${option}-${index}`}>{option}</label>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     ));
   };
 
   return (
-    <div>
-      <h1>Answer Following Question</h1>
+    <div className="quiz-container">
+      <h1 className="quiz-title">Operating System Quiz</h1>
       {renderQuestions()}
-      <button onClick={() => console.log('Selected Answers:', answers)}>
+      <button className="submit-button" onClick={() => console.log('Selected Answers:', answers)}>
         Submit
       </button>
     </div>
